@@ -1,0 +1,430 @@
+{% extends 'base.html' %}
+{% block javascript %}
+
+		<!-- Google fonts -->
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+		<!-- D3.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+		<script src="//d3plus.org/js/d3.js"></script>
+
+		<!-- load D3plus after D3js -->
+		<script src="//d3plus.org/js/d3plus.js"></script>
+
+		<style>
+
+			.legend {
+				font-family: 'Raleway', sans-serif;
+				fill: #333333;
+			}
+
+			.tooltip {
+				fill: #333333;
+			}
+
+			.chart {
+
+			}
+
+            .axis text
+            {
+                font-family: 'Arial';
+                font-size: 13px;
+            }
+            .tick
+            {
+                stroke-dasharray: 1, 2;
+            }
+            .bar
+            {
+                fill: FireBrick;
+            }
+		</style>
+{% endblock %}
+{% block body %}
+<div id="boxResultados">
+    <div id="boxAzul1"><h1>Consulta consolidada</h1></div>
+    <table>
+    <tr>
+        <td valign="top">
+
+            <h3>Filtros Aplicados</h3><pre>
+            {% for filtro in listadoFiltros %}
+                      - {{ filtro }}
+            {% endfor %}
+            </pre>
+        </td>
+        <td valign="top">
+             {% for nota in notas %}
+                {% if nota.indicador.tipo.id == 3 %}
+                    <h2><strong>{{ nota.indicador.name }}</strong> </h2>
+                    <pre><strong> Nota Promedio: {{ nota }}</strong></pre>
+                    {% for notaMin in notasMin %}
+                        {% if notaMin.indicador.id == nota.indicador.id %}
+                            <pre> Nota mínima: {{ notaMin }}</pre>
+                        {% endif %}
+                    {% endfor %}
+                    {% for notaMax in notasMax %}
+                        {% if notaMax.indicador.id == nota.indicador.id %}
+                            <pre> Nota máxima: {{ notaMax }}</pre>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+    </table>
+</div>
+
+<div id="boxResultados">
+<table>
+
+
+    <tr>
+        <td VALIGN=TOP>
+            <div id="boxAzul1"><h3>Dimensiones</h3></div>
+
+                            <div class="radarChart"></div>
+        {% load static %}
+		<script src="{% static 'js/radarChart.js' %}"></script>
+		<script>
+			//////////////////////////////////////////////////////////////
+			//////////////////////// Set-Up //////////////////////////////
+			//////////////////////////////////////////////////////////////
+
+			var margin = {top: 100, right: 100, bottom: 100, left: 100},
+				width = 500,
+				height = 250;
+
+			//////////////////////////////////////////////////////////////
+			////////////////////////// Data //////////////////////////////
+			//////////////////////////////////////////////////////////////
+
+			var data = [
+					  [//Dimensiones
+					    {% for nota in notas %}
+			                {% if nota.indicador.tipo.id == 2 %}
+			                    {axis:"{{ nota.indicador.name }}",value:{{ nota }} },
+                            {% endif %}
+                        {% endfor %}
+					  ]
+					];
+			//////////////////////////////////////////////////////////////
+			//////////////////// Draw the Chart //////////////////////////
+			//////////////////////////////////////////////////////////////
+
+			var color = d3.scale.ordinal()
+				.range(["#CC333F","#EDC951","#00A0B0"]);
+
+			var radarChartOptions = {
+			  w: width,
+			  h: height,
+			  margin: margin,
+			  maxValue: 10,
+			  levels: 5,
+			  roundStrokes: true,
+			  color: color
+			};
+			//Call function to draw the Radar chart
+			RadarChart(".radarChart", data, radarChartOptions);
+		</script>
+        </td>
+    </tr>
+        <tr>
+        <td VALIGN=TOP>
+            <div id="boxAzul1"><h3>Subtemas</h3></div>
+                <div class="radarChart1"></div>
+
+        {% load static %}
+		<script src="{% static 'js/radarChart.js' %}"></script>
+		<script>
+			//////////////////////////////////////////////////////////////
+			//////////////////////// Set-Up //////////////////////////////
+			//////////////////////////////////////////////////////////////
+
+			var margin = {top: 100, right: 100, bottom: 100, left: 100},
+				width = 600,
+				height = 400;
+
+			//////////////////////////////////////////////////////////////
+			////////////////////////// Data //////////////////////////////
+			//////////////////////////////////////////////////////////////
+
+			var data = [
+					  [//Subtemas
+					    {% for nota in notas %}
+			                {% if nota.indicador.tipo.id == 4 %}
+			                    {axis:"{{ nota.indicador.name }}",value:{{ nota }} },
+                            {% endif %}
+                        {% endfor %}
+					  ]
+					];
+			//////////////////////////////////////////////////////////////
+			//////////////////// Draw the Chart //////////////////////////
+			//////////////////////////////////////////////////////////////
+
+			var color = d3.scale.ordinal()
+				.range(["#00A0B0","#EDC951","#CC333F"]);
+
+			var radarChartOptions = {
+			  w: width,
+			  h: height,
+			  margin: margin,
+			  maxValue: 10,
+			  levels: 5,
+			  roundStrokes: true,
+			  color: color
+			};
+			//Call function to draw the Radar chart
+			RadarChart(".radarChart1", data, radarChartOptions);
+		</script>
+        </td>
+    </tr>
+    <tr>
+        <td VALIGN=TOP>
+            <div id="boxAzul1"><h3>Distribución por estadíos</h3></div>
+				 <div id="viz"></div>
+							 <script>
+							  // sample data array
+							  var sample_data = [
+								{"Estadío": 1, "Cantidad": {{ estadio1 }}, "type": "Estadío 1"},
+								{"Estadío": 2, "Cantidad": {{ estadio2 }}, "type": "Estadío 2"},
+								{"Estadío": 3, "Cantidad": {{ estadio3 }}, "type": "Estadío 3"},
+								{"Estadío": 4, "Cantidad": {{ estadio4 }}, "type": "Estadío 4"}
+							  ]
+
+							  // instantiate d3plus
+							  var visualization = d3plus.viz()
+								.container("#viz")  // container DIV to hold the visualization
+								.data(sample_data)  // data to use with the visualization
+								.type("scatter")    // visualization type
+								.id("type")         // key for which our data is unique on
+								.x("Estadío")         // key for x-axis
+								.y("Cantidad")        // key for y-axis
+								.width(500)
+								.height(250)
+								.draw()             // finally, draw the visualization!
+							</script>
+        </td>
+    </tr>
+</table>
+
+<table>
+    <div id="boxAzul1"><h3>Dimensiones</h3></div>
+      {% for nota in notas %}
+        {% if nota.indicador.tipo.id == 2 %}
+        <tr>
+            <td align="center">
+                <h4>Dimensión {{ nota.indicador.name }}</h4>
+             <br>
+                				 <div id="viz{{ nota.indicador.id }}"></div>
+							 <script>
+							  // sample data array
+							  var sample_data = [
+								{"evaluacion": 1, "Nota": {% for notaMin in notasMin %}
+                                                        {% if notaMin.indicador.id == nota.indicador.id %}
+                                                            {{ notaMin }}
+                                                        {% endif %}
+                                                    {% endfor %}, "type": "Nota Mínima"},
+								{"evaluacion": 2, "Nota": {{ nota }}, "type": "Nota Promedio"},
+								{"evaluacion": 3, "Nota": {% for notaMax in notasMax %}
+                                                        {% if notaMax.indicador.id == nota.indicador.id %}
+                                                            {{ notaMax }}
+                                                        {% endif %}
+                                                    {% endfor %}, "type": "Nota Máxima"}
+							  ]
+
+							  // instantiate d3plus
+							  var visualization = d3plus.viz()
+								.container("#viz{{ nota.indicador.id }}")  // container DIV to hold the visualization
+								.data(sample_data)  // data to use with the visualization
+								.type("scatter")    // visualization type
+								.id("type")         // key for which our data is unique on
+								.x("evaluacion")         // key for x-axis
+								.y("Nota")        // key for y-axis
+								.width(500)
+								.height(250)
+								.draw()             // finally, draw the visualization!
+							</script>
+            </td>
+        </tr>
+            {% endif %}
+        {% endfor %}
+</table>
+</div>
+
+<div id="boxResultados1">
+<table>
+    <tr>
+        <td VALIGN=TOP>
+            <h3>Indicadores</h3>
+            <div class="datagrid">
+			<table>
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Nota Promedio</th>
+                        <th>Nota Mínima</th>
+                        <th>Nota Máxima</th>
+					</tr>
+				</thead>
+                <tbody>
+                 {% for nota in notas %}
+                    {% if nota.indicador.tipo.id == 1 %}
+                    <tr>
+                        <td>
+                            {{ nota.orden }}- {{ nota.indicador.name }}
+                        </td>
+                        <td>
+                            <strong>{{ nota }}</strong>
+                        </td>
+                        {% for notaMin in notasMin %}
+                            {% if notaMin.indicador.id == nota.indicador.id %}
+                                <td>
+                                    {{ notaMin }}
+                                </td>
+                            {% endif %}
+                        {% endfor %}
+                        {% for notaMax in notasMax %}
+                            {% if notaMax.indicador.id == nota.indicador.id %}
+                             <td>
+                               {{ notaMax }}
+                            </td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </td>
+        <tr>
+        <td VALIGN=TOP>
+            <table>
+                <tr><td>
+            <h3>Dimensiones</h3>
+                    <div class="datagrid">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Nota Promedio</th>
+                                <th>Nota Mínima</th>
+                                <th>Nota Máxima</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           {% for nota in notas %}
+                            {% if nota.indicador.tipo.id == 2 %}
+                            <tr>
+                                <td>
+                                {{ nota.indicador.name }}
+                                </td>
+                                <td><strong> {{ nota }}</strong></td>
+                                {% for notaMin in notasMin %}
+                                    {% if notaMin.indicador.id == nota.indicador.id %}
+                                       <td>  {{ notaMin }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                                {% for notaMax in notasMax %}
+                                    {% if notaMax.indicador.id == nota.indicador.id %}
+                                        <td> {{ notaMax }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+            </div>
+            </td></tr>
+            </table>
+        </td>
+        </tr>
+        <tr>
+            <td VALIGN=TOP>
+                <table><tr><td>
+                    <h3>Temas</h3>
+                    <div class="datagrid">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Nota Promedio</th>
+                                    <th>Nota Mínima</th>
+                                    <th>Nota Máxima</th>
+                                </tr>
+                            </thead>
+                        <tbody>
+                         {% for nota in notas %}
+                            {% if nota.indicador.tipo.id == 4 %}
+                                <tr><td>
+                                {{ nota.indicador.name }}</td>
+                               <td> <strong>{{ nota }}</strong></td>
+                                {% for notaMin in notasMin %}
+                                    {% if notaMin.indicador.id == nota.indicador.id %}
+                                        <td>{{ notaMin }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                                {% for notaMax in notasMax %}
+                                    {% if notaMax.indicador.id == nota.indicador.id %}
+                                       <td> {{ notaMax }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                        </table>
+                    </div>
+                    </td></tr></table>
+                    </td>
+                </tr>
+                <tr>
+                    <td VALIGN=TOP>
+                        <table><tr><td>
+                        <h3>Distribución por estadíos</h3>
+                        <div class="datagrid">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Cant Promedio</th>
+                                    <th>Cant Mínima</th>
+                                    <th>Cant Máxima</th>
+                                </tr>
+                            </thead>
+                        <tbody>
+                         {% for nota in notas %}
+                            {% if nota.indicador.tipo.id == 5 %}
+                            <tr>
+                                <td>{{ nota.indicador.name }}</td>
+                                <td> <strong>{{ nota }}</strong></td>
+                                {% for notaMin in notasMin %}
+                                    {% if notaMin.indicador.id == nota.indicador.id %}
+                                        <td>{{ notaMin }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                                {% for notaMax in notasMax %}
+                                    {% if notaMax.indicador.id == nota.indicador.id %}
+                                        <td>{{ notaMax }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                             </tr>
+                            {% endif %}
+                        {% endfor %}
+                         </tbody>
+                        </table>
+                    </div>
+                    </td></tr></table>
+            </td>
+        </tr>
+        </td>
+	</tr>
+</table>
+</div>
+
+
+{% endblock %}

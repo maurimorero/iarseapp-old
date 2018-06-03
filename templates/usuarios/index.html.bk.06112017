@@ -1,0 +1,152 @@
+{% extends 'base/base.html' %}
+{% block javascript %}
+
+<script>
+    function errorLogin(){
+        alert("{{ form.non_field_errors }}");
+    }
+</script>
+{% endblock %}
+{% block header %}
+{% endblock %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {% load static %}
+        <img src="{% static 'img/indicadores2.png' %}">
+
+    <div id="box1">
+        <table>
+            <tr>
+                <td>
+
+
+        <div id="boxLogin1">
+            <table>
+                <tr>
+                    <td>
+
+                    INDICADORES DE <strong>RESPONSABILIDAD SOCIAL<br></strong> Y <strong>SUSTENTABILIDAD </strong>PARA EL AGRO
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                            <input class="form-control" type="text" name="username" placeholder="CUIT (Ingrese sólo números)" style="width: 300px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="form-control" type="password" name="password"  placeholder="CONTRASEÑA" style="width: 300px;">
+                    </td>
+                 </tr>
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td align="center">
+                                    <a href="{% url 'password_reset' %}" style="text-decoration:none;">Olvidé mi contraseña</a>
+                                </td>
+                                <td>
+                                     <button type="submit" class="boton5" style="margin: 0px 0px 0px 50px;">INGRESAR</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <a href="{% url 'usuarios:registrar' %}" style="text-decoration:none;"> <input type="button" value="REGISTRARSE" class="boton10" style="margin: 30px 0px 0px 0px;"></a>
+                     </td>
+                </tr>
+
+
+            {% if form.errors %}
+                {% for error in form.non_field_errors %}
+                    <script>
+                       alert("{{ error|escape }}");
+                    </script>
+                {% endfor %}
+            {% endif %}
+                </table>
+        </div>
+
+            </td>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+
+                                <table>
+                                    <tr>
+                                        <td>
+                                           <a href="{% static 'download/libro-indicadores.pdf' %}" style="text-decoration:none;"> <input type="button" value="DESCARGAR LIBRO" class="boton11" style="margin: 0px 0px 0px 0px;"></a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'usuarios:metodologia' %}" style="text-decoration:none;"> <input type="button" value="GUÍA DE USO" class="boton12" style="margin: 0px 0px 0px 0px;"></a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'usuarios:simulador1' %}" style="text-decoration:none;"> <input type="button" value="SIMULADOR" class="boton11" style="margin: 0px 0px 0px 0px;"></a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'usuarios:creditos' %}" style="text-decoration:none;"> <input type="button" value="CRÉDITOS" class="boton12" style="margin: 0px 0px 0px 0px;"></a>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/cAcsa2Xzs7Q"  allowfullscreen></iframe>
+                            </td>
+                        </tr>
+                    </table>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+        {% if message.tags %}
+            <script>
+                   alert("{{ message }}");
+            </script>
+        {% endif %}
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div id="boxLogos">
+{% load static %}
+<div class="slider">
+			<ul>
+				<li>
+
+                     <img src="{% static 'img/logosinicio/0.png' %}">
+                </li>
+				<li>
+
+                    <img src="{% static 'img/logosinicio/1.png' %}">
+                </li>
+				<li>
+
+                    <img src="{% static 'img/logosinicio/2.png' %}">
+                </li>
+				<li>
+
+                    <img src="{% static 'img/logosinicio/3.png' %}">
+                </li>
+                <li>
+
+                    <img src="{% static 'img/logosinicio/4.png' %}">
+                </li>
+			</ul>
+		</div>
+</div>
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends 'base/base.html' %}
+{% block javascript %}
+
+
+{% endblock %}
+{% block content %}
+<script type="text/javascript">
+function Guardar(){
+    if(document.getElementById('100').checked)
+    {
+         document.getElementById("response").submit();
+    }
+    else
+    {
+        alert("Debe aceptar los términos y condiciones de privacidad para registrarse");
+    }
+};
+</script>
+
+<form method="post" id="response">
+    {% csrf_token %}
+    <div id="boxRegistro">
+        <table>
+            <tr>
+                {% load static %}<div id="indicagro"><img src="{% static 'img/indicadores2.png' %}"></div>
+            </tr>
+
+            <tr>
+                    <td align="right">
+                        <pre>Empresa (Razón social):</pre></td> <td> {{ profile_form.empresa }}</td> <td> {{ profile_form.empresa.errors }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <pre>Empresa (Nombre comercial):</pre></td> <td>{{ profile_form.empresaCom }}</td> <td> {{ profile_form.empresaCom.errors }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <pre>CUIT DE LA EMPRESA(Ingrese solo números. El mismo <br> será solicitado para loguearse): </pre></td> <td>{{ user_form.username }}</td> <td>{{ user_form.username.errors }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <pre>Actividad principal: </pre></td> <td>{{ profile_form.actividadPrincipal }}</td> <td>{{ profile_form.actividadPrincipal.errors }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <pre>Actividad secundaria (Campo opcional): </pre></td> <td>{{ profile_form.actividadSecundaria }}</td> <td> {{ profile_form.actividadSecundaria.errors }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <pre>Nombre y Apellido (Usuario responsable):  </pre></td> <td>{{ profile_form.nombre }}</td> <td>{{ profile_form.nombre.errors }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <pre>Cargo: </pre></td> <td>{{ profile_form.puesto }}</td> <td>{{ profile_form.puesto.errors }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <pre>Email: </pre></td> <td>{{ profile_form.email }}</td> <td>{{ profile_form.email.errors }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <pre>Teléfono: </pre></td> <td>{{ profile_form.telefono }}</td> <td>{{ profile_form.telefono.errors }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <pre>Dirección: </pre></td> <td>{{ profile_form.direccion }}</td> <td>{{ profile_form.direccion.errors }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <pre>CP: </pre></td> <td>{{ profile_form.cp }}</td> <td>{{ profile_form.errors }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <pre>Provincia: </pre></td> <td>{{ profile_form.provincia }}</td> <td>{{ profile_form.provincia.errors }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <pre>Localidad de explotación: </pre></td> <td>{{ profile_form.localidad }}</td> <td>{{ profile_form.localidad.errors }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <pre>Contraseña:</pre></td> <td>{{ user_form.password1 }} </td> <td>{{ user_form.password1.errors }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <pre>Confirmar contraseña:</pre></td> <td>{{ user_form.password2 }}</td> <td>{{ user_form.password2.errors }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <pre>Comentarios adicionales sobre la empresa:</pre></td> <td>{{ profile_form.comentarios }}</td> <td> {{ profile_form.comentarios.errors }}
+                </td>
+            </tr>
+            <tr>
+
+                <td align="right">
+                    Leí y acepto los <a href="{% url 'usuarios:condiciones' %}">términos y condiciones de privacidad</a>
+                </td>
+                <td><input type="checkbox" id=100 name=terminos value=si  class="chkbox"></td>
+                <td align="right">
+                    <input type="button" value="Guardar" class="boton1" onclick="javascript:Guardar();">
+
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="//d3plus.org/js/d3.js"></script>
+
+    <!-- load D3plus after D3js -->
+    <script src="//d3plus.org/js/d3plus.js"></script>
+      {% load static %}
+	<script src="{% static 'js/radarChartOld1.js' %}"></script>
+    <style>
+        .axis path, .axis line
+        {
+            fill: none;
+            stroke: #777;
+            shape-rendering: crispEdges;
+        }
+
+        .axis text
+        {
+            font-family: 'Arial';
+            font-size: 13px;
+        }
+        .tick
+        {
+            stroke-dasharray: 1, 2;
+        }
+        .bar
+        {
+            fill: FireBrick;
+        }
+    </style>
+</head>
+<body>
+
+<table>
+        <tr>
+            <table>
+                <tr>
+                    <td>
+                        <h3>Dimensiones</h3>
+                             <div id="body1">
+	                            <div id="chart1"></div>
+                            </div>
+
+	<script>
+            var w = 1200,
+	        h = 1200;
+
+var colorscale = d3.scale.category10();
+
+//Legend titles
+var LegendOptions = ['{{ evaluacion.fecha }}','{{ evaluacion1.fecha }}'];
+
+//Data
+var d = [
+					  [//Dimensiones1
+					    {% for nota in notasDim %}
+			                {axis:"{{ nota.indicador.name }}",value:{{ nota }} },
+                        {% endfor %}
+					  ],
+					  [//Subtemas2
+					    {% for nota in notasDim1 %}
+			                {axis:"{{ nota.indicador.name }}",value:{{ nota }} },
+                        {% endfor %}
+					  ]
+					];
+
+//Options for the Radar chart, other than default
+var mycfg = {
+  w: w,
+  h: h,
+  maxValue: 10,
+  levels: 10,
+  ExtraWidthX: 300
+}
+
+//Call function to draw the Radar chart
+//Will expect that data is in %'s
+RadarChart.draw("#chart1", d, mycfg);
+
+////////////////////////////////////////////
+/////////// Initiate legend ////////////////
+////////////////////////////////////////////
+
+var svg = d3.select('#body1')
+	.selectAll('svg')
+	.append('svg')
+	.attr("width", w+300)
+	.attr("height", h)
+
+//Create the title for the legend
+var text = svg.append("text")
+	.attr("class", "title")
+	.attr('transform', 'translate(90,0)')
+	.attr("x", w - 70)
+	.attr("y", 10)
+	.attr("font-size", "12px")
+	.attr("fill", "#404040")
+	.text("Auto-evaluaciones");
+
+//Initiate Legend
+var legend = svg.append("g")
+	.attr("class", "legend")
+	.attr("height", 100)
+	.attr("width", 200)
+	.attr('transform', 'translate(90,20)')
+	;
+	//Create colour squares
+	legend.selectAll('rect')
+	  .data(LegendOptions)
+	  .enter()
+	  .append("rect")
+	  .attr("x", w - 65)
+	  .attr("y", function(d, i){ return i * 20;})
+	  .attr("width", 10)
+	  .attr("height", 10)
+	  .style("fill", function(d, i){ return colorscale(i);})
+	  ;
+	//Create text next to squares
+	legend.selectAll('text')
+	  .data(LegendOptions)
+	  .enter()
+	  .append("text")
+	  .attr("x", w - 52)
+	  .attr("y", function(d, i){ return i * 20 + 9;})
+	  .attr("font-size", "11px")
+	  .attr("fill", "#737373")
+	  .text(function(d) { return d; })
+	  ;
+    </script>
+
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                         <h3>Distribución por estadíos</h3>
+                                    <h4>Autoevaluacion del {{ evaluacion.fecha }}</h4>
+                                <svg id="visualisation" width="400" height="200"></svg>
+
+							 <script>
+InitChart();
+
+function InitChart() {
+
+  var barData = [{
+    'x': 1,
+    'y': {{ estadio1 }}
+  }, {
+    'x': 2,
+    'y': {{ estadio2 }}
+  }, {
+    'x': 3,
+    'y': {{ estadio3 }}
+  }, {
+    'x': 4,
+    'y': {{ estadio4 }}
+  }];
+
+  var vis = d3.select('#visualisation'),
+    WIDTH = 400,
+    HEIGHT = 200,
+    MARGINS = {
+      top: 20,
+      right: 20,
+      bottom: 20,
+      left: 50
+    },
+    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
+      return d.x;
+    })),
+
+
+    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
+      d3.max(barData, function (d) {
+        return d.y;
+      })
+    ]),
+
+    xAxis = d3.svg.axis()
+      .scale(xRange)
+      .tickSize(5)
+      .tickSubdivide(true),
+
+    yAxis = d3.svg.axis()
+      .scale(yRange)
+      .tickSize(5)
+      .orient("left")
+      .tickSubdivide(true);
+
+
+  vis.append('svg:g')
+    .attr('class', 'x axis')
+    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+    .call(xAxis);
+
+  vis.append('svg:g')
+    .attr('class', 'y axis')
+    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+    .call(yAxis);
+
+  vis.selectAll('rect')
+    .data(barData)
+    .enter()
+    .append('rect')
+    .attr('x', function (d) {
+      return xRange(d.x);
+    })
+    .attr('y', function (d) {
+      return yRange(d.y);
+    })
+    .attr('width', xRange.rangeBand())
+    .attr('height', function (d) {
+      return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
+    })
+    .attr('fill', 'grey')
+    .on('mouseover',function(d){
+      d3.select(this)
+        .attr('fill','blue');
+    })
+    .on('mouseout',function(d){
+      d3.select(this)
+        .attr('fill','grey');
+    });
+
+}
+
+							</script>
+                                    </td></tr>
+
+                        <tr>
+                            <td>
+                                <h4>Autoevaluacion del {{ evaluacion1.fecha }}</h4>
+                                <svg id="visualisation1" width="400" height="200"></svg>
+							 <script>
+InitChart();
+
+function InitChart() {
+
+  var barData = [{
+    'x': 1,
+    'y': {{ estadio11 }}
+  }, {
+    'x': 2,
+    'y': {{ estadio21 }}
+  }, {
+    'x': 3,
+    'y': {{ estadio31 }}
+  }, {
+    'x': 4,
+    'y': {{ estadio41 }}
+  }];
+
+  var vis = d3.select('#visualisation1'),
+    WIDTH = 400,
+    HEIGHT = 200,
+    MARGINS = {
+      top: 20,
+      right: 20,
+      bottom: 20,
+      left: 50
+    },
+    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
+      return d.x;
+    })),
+
+
+    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
+      d3.max(barData, function (d) {
+        return d.y;
+      })
+    ]),
+
+    xAxis = d3.svg.axis()
+      .scale(xRange)
+      .tickSize(5)
+      .tickSubdivide(true),
+
+    yAxis = d3.svg.axis()
+      .scale(yRange)
+      .tickSize(5)
+      .orient("left")
+      .tickSubdivide(true);
+
+
+  vis.append('svg:g')
+    .attr('class', 'x axis')
+    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+    .call(xAxis);
+
+  vis.append('svg:g')
+    .attr('class', 'y axis')
+    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+    .call(yAxis);
+
+  vis.selectAll('rect')
+    .data(barData)
+    .enter()
+    .append('rect')
+    .attr('x', function (d) {
+      return xRange(d.x);
+    })
+    .attr('y', function (d) {
+      return yRange(d.y);
+    })
+    .attr('width', xRange.rangeBand())
+    .attr('height', function (d) {
+      return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
+    })
+    .attr('fill', 'grey')
+    .on('mouseover',function(d){
+      d3.select(this)
+        .attr('fill','blue');
+    })
+    .on('mouseout',function(d){
+      d3.select(this)
+        .attr('fill','grey');
+    });
+
+}
+</script>
+                            </td>
+                        </tr>
+                        </table>
+
+                    </td>
+                </tr>
+
+            </table>
+            <tr><td>
+
+    <div id="body">
+        <h3>Subtemas</h3>
+	  <div id="chart"></div>
+    </div>
+
+	<script>
+            var w = 1450,
+	        h = 1450;
+
+var colorscale = d3.scale.category10();
+
+//Legend titles
+var LegendOptions = ['{{ evaluacion.fecha }}','{{ evaluacion1.fecha }}'];
+
+//Data
+var d = [
+					  [//Subtemas1
+					    {% for nota in notasTem %}
+			                {axis:"{{ nota.indicador.name }}",value:{{ nota }} },
+                        {% endfor %}
+					  ],
+					  [//Subtemas2
+					    {% for nota in notasTem1 %}
+			                {axis:"{{ nota.indicador.name }}",value:{{ nota }} },
+                        {% endfor %}
+					  ]
+					];
+
+//Options for the Radar chart, other than default
+var mycfg = {
+  w: w,
+  h: h,
+  maxValue: 10,
+  levels: 10,
+  ExtraWidthX: 300
+}
+
+//Call function to draw the Radar chart
+//Will expect that data is in %'s
+RadarChart.draw("#chart", d, mycfg);
+
+////////////////////////////////////////////
+/////////// Initiate legend ////////////////
+////////////////////////////////////////////
+
+var svg = d3.select('#body')
+	.selectAll('svg')
+	.append('svg')
+	.attr("width", w+300)
+	.attr("height", h)
+
+//Create the title for the legend
+var text = svg.append("text")
+	.attr("class", "title")
+	.attr('transform', 'translate(90,0)')
+	.attr("x", w - 70)
+	.attr("y", 10)
+	.attr("font-size", "12px")
+	.attr("fill", "#404040")
+	.text("Auto-evaluaciones");
+
+//Initiate Legend
+var legend = svg.append("g")
+	.attr("class", "legend")
+	.attr("height", 100)
+	.attr("width", 200)
+	.attr('transform', 'translate(90,20)')
+	;
+	//Create colour squares
+	legend.selectAll('rect')
+	  .data(LegendOptions)
+	  .enter()
+	  .append("rect")
+	  .attr("x", w - 65)
+	  .attr("y", function(d, i){ return i * 20;})
+	  .attr("width", 10)
+	  .attr("height", 10)
+	  .style("fill", function(d, i){ return colorscale(i);})
+	  ;
+	//Create text next to squares
+	legend.selectAll('text')
+	  .data(LegendOptions)
+	  .enter()
+	  .append("text")
+	  .attr("x", w - 52)
+	  .attr("y", function(d, i){ return i * 20 + 9;})
+	  .attr("font-size", "11px")
+	  .attr("fill", "#737373")
+	  .text(function(d) { return d; })
+	  ;
+    </script>
+           </td>
+    </tr>
+</table>
+
+</body>
+</html>

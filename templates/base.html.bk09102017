@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<meta charset="utf-8">
+	<title>INDICAGRO</title>
+	   {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/estilo.css' %}">
+	  {% block javascript %}
+
+	  {% endblock %}
+
+  </head>
+{% load static %}
+
+  <body>
+	<nav>
+	 <ul class="fullnav">
+	  <li>
+		  {% load static %}
+	   <a href="{% url 'usuarios:usuarios_home' %}"><img src="{% static 'img/solologo.png' %}" width="110" height="15"></a>
+	  </li>
+	  <li>
+		  <a href="#"><strong>¡ COMENZAR ENCUESTA !</strong></a>
+	   <ul>
+		<li>
+		 <a href="{% url 'surveys:encuesta_completa' 2 %}" title="Nivel Básico: Contempla un total de 15 indicadores para una auto evaluación elemental en materia de RS&S. Se recomienda para una pequeña empresa." >Nivel Básico</a>
+		</li>
+		<li>
+		 <a href="{% url 'surveys:encuesta_completa' 3 %}" title="Nivel Amplio: Contempla un total de 30 indicadores para una autoevaluación en materia de RS&S. Se recomienda para una mediana empresa.">Nivel Amplio</a>
+		</li>
+		<li>
+		 <a href="{% url 'surveys:encuesta_completa' 1 %}" title="Nivel Comprensivo: Contempla un total de 50 indicadores para una autoevaluación exhaustiva en materia de RS&S. Se recomienda para una gran empresa.">Nivel Comprensivo</a>
+		</li>
+	   </ul>
+	  </li>
+	  <li>
+	   <a href="#">Consultar indicadores</a>
+	   <ul>
+		<li>
+		 <a href="{% url 'indicadores:indicadores' 2 %}">Nivel Básico</a>
+
+		</li>
+		<li>
+		 <a href="{% url 'indicadores:indicadores' 3 %}">Nivel Amplio</a>
+		</li>
+		<li>
+		 <a href="{% url 'indicadores:indicadores' 1 %}">Nivel Comprensivo</a>
+		</li>
+	   </ul>
+	  </li>
+		 <li>
+	   		<a href="{% url 'usuarios:metodologia1' %}">Guía de uso</a>
+		 </li>
+		 <li>
+	   		<a href="{% url 'usuarios:creditos1' %}">Créditos</a>
+		 </li>
+		 <li>
+	   		<a href="mailto:indicagro@bccba.com.ar">Contacto</a>
+		 </li>
+	 	{% if request.user.is_superuser %}
+		 	<li>
+			   <a href="#">Admin</a>
+			   <ul>
+					<li>
+				 		<a href="{% url 'indicadores:consultaconsolidada' %}"> Consulta consolidada </a>
+					</li>
+				</ul>
+		 	</li>
+	 	{% endif %}
+		 <li>
+	   		<a href="{% url 'usuarios:usuarios_datos' %}"> {{ request.user.profile.empresa }} </a>
+		 </li>
+		 <li>
+	   		<a href="{% url 'logout' %}">Salir</a>
+		 </li>
+	 </ul>
+	</nav>
+
+	<!-- Part 1: Wrap all page content here -->
+	{% block wrapper %}
+
+	{% endblock %}
+
+	<div class="container" id="container-main">
+		<br><br>
+	{% block body %}
+	{% endblock %}
+
+	<div id="push"></div> <!-- #push goes inside container -->
+	</div> <!-- /container -->
+
+	<footer class="footer">
+		<div class="container">
+	{% block footer %}
+	{% endblock %}
+		</div>
+	</footer>
+	<!-- Le javascript -->
+
+	{% block extrajs %}
+	{% endblock %}
+  </body>
+</html>
+

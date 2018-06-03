@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load survey_extras %}
+
+{% block body %}
+<div id="boxEncuestaIndex">
+<h1>Subtema {{survey.name|title}}</h1>
+<p>NOTA</p>
+<p>- Debe responder las preguntas de cada indicador para que se guarden</p>
+<p>- Una vez completado el subtema, no se puede volver a editar</p>
+<p>- Si el indicador no aplica, por favor marque las respuestas binarias indistintamente. El sistema eliminará el indicador en cuestión para el cálculo final</p>
+<div class="survey-description">
+	{{survey.description|safe}}
+</div>
+</div>
+<div id="boxRegistro">
+<div>
+	<form action="{% url 'surveys:survey_detail' id_resp_mgr survey.id %}" method="post">{% csrf_token %}
+
+		<!--<h3 class="collapsible" id="response_metadata">Encuesta del IARSE<span></span></h3>-->
+		<div class="category-container">
+
+		<div class="field-wrapper">
+			{{ response_form.conditions.errors }}
+			{{ response_form.conditions.label_tag }}
+			<span class="form-help-text">{{ response_form.conditions.help_text}}</span>
+			<div class="form-field-body">
+				{{ response_form.conditions }}
+			</div>
+		</div>
+
+		<div class="field-wrapper">
+			{{ response_form.comments.errors }}
+			{{ response_form.comments.label_tag }}
+			<span class="form-help-text">{{ response_form.comments.help_text}}</span>
+			<div class="form-field-body">
+				{{ response_form.comments }}
+			</div>
+		</div>
+	</div>
+
+		<ol class="survey-questions">
+		{% for field in response_form %}
+				{% if field.field.widget.attrs.category == None %}
+					<li class="q-item" value="{% counter %}">
+					{% if field.field.required %}
+					<div class="field-wrapper question-required">
+						{{ field.errors }}
+						<span class="asterix"> * </span><label class="label-inline">{{ field.label }}</label>
+					{% else %}
+					<div class="field-wrapper">
+						{{ field.errors }}
+						<label class="label-inline">{{ field.label }}</label>
+					{% endif %}
+						<span class="form-help-text">{{ field.help_text}}</span>
+						<div class="form-field-body">
+							<br><br>{{ field }}
+						</div>
+					</div>
+					</li>
+				{% endif %}
+			{% endfor %}
+		{% for category in categories %}
+
+			<h3 class="collapsible">Indicador {{category|title}}<span></span></h3>
+			<div class="category-container">
+			{% for field in response_form %}
+				{% if field.field.widget.attrs.category == category %}
+
+					{% if field.field.required %} 
+					<div class="field-wrapper question-required"> 
+						{{ field.errors }}
+						<br><span class="asterix"> <!-- Aca va el * de requerida --> </span><label class="label-inline">{{ field.label }}</label>
+					{% else %} 
+					<div class="field-wrapper"> 
+						{{ field.errors }}
+						<label class="label-inline">{{ field.label }}</label>
+					{% endif %}
+						<span class="form-help-text">{{ field.help_text}}</span>
+						<div class="form-field-body">
+							{{ field }}
+						</div>
+					</div>
+
+				{% endif %}
+			{% endfor %}
+			</div>
+		{% endfor %}
+
+		</ol>
+
+		<div class="submit-button"><input type="submit" value="Listo" class="boton"></div>
+	</form>
+
+</div>
+</div>
+
+{% endblock %}
+
+{% block extrajs %}
+	<script src="/media/js/jquery.collapsible.js"></script>	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			//collapsible management
+			$('.collapsible').collapsible({defaultOpen: 'response_metadata'});
+		});
+	</script>
+{% endblock %}

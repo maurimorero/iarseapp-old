@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<table>
+	<tr>
+		<td valign="TOP">
+						<div id="boxCote">
+							{% if pendientes %}
+							<h3> Encuestas de autodiagnóstico pendientes:</h3>
+							<div class="datagrid">
+							<table>
+								<thead>
+								<tr>
+									<th>Fecha</th>
+									<th>Encuesta</th>
+									<th>Accion</th>
+								</tr>
+								</thead>
+								<tbody>
+								{% for pen in pendientes %}
+								<tr>
+									<td><a href="{% url 'surveys:encuesta_view' pen.id 0 %}">{{ pen.created }}</a></td>
+									<td>{{ pen.encuesta.name }}</td>
+									<td><a href="{% url 'surveys:encuesta_delete' pen.id %}">Eliminar</a></td>
+								</tr>
+								{% endfor %}
+								</tbody>
+							</table>
+								</div>
+							{% else %}
+								<div class="boton4"><h3> Usted no posee encuestas pendientes</h3></div>
+							{% endif %}
+
+						</div>
+						<div id="boxCote">
+							{% if evaluaciones %}
+							<h3> Encuestas de autodiagnóstico finalizadas:</h3>
+							<h5>NOTA: Se sugiere aplicar siempre al mismo nivel de encuesta para que los resultados comparativos sean fidedignos</h5>
+							{% if messages %}
+							{% for message in messages %}
+							<script>
+									alert("{{ message }}");
+							</script>
+							{% endfor %}
+							{% endif %}
+							<table>
+								<tr>
+									<td><a href="{% url 'indicadores:resultadoscomp' request.user.id  %}">Consulta Comparativa</a></td>
+								</tr>
+								{% for eva in evaluaciones %}
+								<tr>
+									<td><a href="{% url 'indicadores:resultados' eva.id %}">{{ eva.fecha }}</a></td>
+								</tr>
+								{% endfor %}
+							</table>
+						</div>
+						{% else %}
+			<div class="boton4"><h3> Usted no posee encuestas finalizadas</h3></div>
+						{% endif %}
+		</td>
+		<td valign="TOP">
+			<div id="boxHome">
+			<div id="intro">
+			<h1>¡ Bienvenido {{ request.user.profile.empresa }} !</h1>
+
+			</div>
+			{% if request.user.is_superuser %}
+			<h3>Autodiagnósticos:</h3>
+			<div class="datagrid">
+			<table>
+				<thead>
+					<tr>
+						<th>Empresa (Nombre Comercial)</th>
+						<th>CUIT</th>
+						<th>Empresa (Razón Social)</th>
+						<th>Usuario</th>
+						<th>Email</th>
+						<th>Teléfono</th>
+						<th>Fecha</th>
+						<th>Tipo de Evaluación</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for ind in indicadoresTodos %}
+				<tr>
+					{% for per in perfiles %}
+						{% if ind.usuario == per.user %}
+							<td>{{ per.empresaCom }} </td>
+							<td>{{ ind.usuario.username }}</td>
+							<td>{{ per.empresa }} </td>
+							<td>{{ per.nombre }} </td>
+							<td>{{ per.email }} </td>
+							<td>{{ per.telefono }} </td>
+							<td><a href="{% url 'indicadores:resultados'  ind.id %}">{{ ind.fecha }}</a></td>
+							<td>{{ ind.rspMgr.encuesta.name }}</td>
+						{% endif %}
+					{% endfor %}
+				</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+			</div>
+			{% else %}
+				<table>
+					{% if mensaje == '1' %}
+						<tr><td>
+								<h2><strong>Su usuario se encuentra pendiente de validación</strong></h2>
+							</td>
+						</tr>
+					{% endif %}
+					<tr><td>
+							<h2>Metodología de uso de los Indicadores</h2>
+						</td>
+					</tr>
+
+					<tr><td>
+
+							Los presentes indicadores de RS&S para empresas agropecuarias, están estructurados como una <strong>Encuesta de Autodiagnóstico.</strong> La misma se divide en <strong>7 Dimensiones</strong> que pretenden abarcar integralmente a una empresa. Ellas son:
+
+							<br><br>1.- VALORES - TRANSPARENCIA Y GESTIÓN
+							<br>2.- PRÁCTICAS DE EMPLEO Y TRABAJO DIGNO
+							<br>3.- SUSTENTABILIDAD DE LAS PRÁCTICAS AGRÍCOLAS - GANADERAS
+							<br>4.- RELACIÓN CON PROVEEDORES
+							<br>5.- RELACIONES CON CLIENTES Y OTROS PRODUCTORES
+							<br>6.- RELACIONES CON LAS COMUNIDADES LOCALES
+							<br>7.- RELACIONES CON GOBIERNO Y SOCIEDAD
+
+							<br><br>Estas dimensiones a su vez, están divididas en <strong>18 Sub-Temas</strong> que permiten al usuario enfocarse con más detalle en la operación de los temas críticos de la responsabilidad social y el compromiso con la sustentabilidad de una empresa agropecuaria.
+
+							<br><br>De esos sub-temas, se han elaborado un total de <strong>50 Indicadores</strong>. Cada uno de ellos permite analizar el estado de avance de la empresa mediante la respuesta de preguntas binarias (si/no); y considerando que pueden existir <strong>4 estadíos de progreso</strong> posibles de selección en cada uno de ellos, que van desde el cumplimiento de la legislación vigente como piso, hasta el liderazgo reconocido por una determinada buena práctica de RS&S.
+
+							<br><br>A su vez, considerando que dentro del espectro general de la producción agrícola y ganadera del país existe una gran diversidad de tamaños de emprendimientos, la guía ha previsto que existan <strong>3 niveles de complejidad</strong> para la auto-aplicación de la encuesta basada en los indicadores. Esos niveles poseen una cierta relación con las características habituales de pequeña, mediana y gran empresa. Para las <strong>empresas pequeñas</strong> el nivel se denomina <strong>Básico</strong>, y la encuesta comprende <strong>15 Indicadores</strong>. Para las <strong>empresas de tamaño mediano</strong>, el nivel denomina <strong>Amplio</strong>, y la encuesta abarca <strong>30 Indicadores</strong>; mientras que, para las <strong>empresas grandes</strong> el nivel se denomina <strong>Comprensivo</strong> propone la aplicación de la totalidad de los <strong>50 Indicadores</strong> que componen la encuesta en su forma más detallada.
+
+							<br><br>Dada la heterogeneidad del tipo y tamaño relativo de las empresas agropecuarias de las diferentes regiones y sistemas productivos de la Argentina, no es posible efectuar una clasificación taxativa y objetiva de tamaños; por lo que se sugiere que la empresa interesada en usar los Indicadores se auto-aplique aquellos que corresponden al tamaño con los que la empresa “se siente más cómoda o reflejada”.
+						</tr></td>
+						<tr><td>
+							<br>
+							<table><tr><td align="center">
+								<div class="datagrid">
+								<table>
+									<thead>
+										<tr>
+											<th>Tamaño de la empresa</th>
+											<th>Nivel de Aplicación</th>
+											<th>Cantidad de Indicadores</th>
+										</tr>
+									</thead>
+									<tbody>
+											<tr>
+												<td>Pequeña</td>
+												<td>Básico</td>
+												<td>15</td>
+											</tr>
+											<tr>
+												<td>Mediana</td>
+												<td>Amplio</td>
+												<td>30</td>
+											</tr>
+											<tr>
+												<td>Grande</td>
+												<td>Comprensivo</td>
+												<td>50</td>
+											</tr>
+									</tbody>
+								</table>
+								</div>
+							</td></tr></table>
+						</tr></td>
+						<tr><td>
+
+							<br><br>La base técnica de la encuesta permite que, una vez que la empresa que ha solicitado una clave de seguridad / acceso al administrador, solo ella puede ingresar al sistema para comenzar a responder la encuesta. Este proceso puede completarse en una o varias etapas sucesivas de trabajo, de modo de permitir el más amplio nivel de participación, sin temor a la pérdida de los datos y opciones consignadas en cada espacio de trabajo. El sistema de claves únicas por usuario garantiza <strong><italic>la más absoluta confidencialidad de los resultados que cada empresa obtiene</italic></strong>, respetando el principio de autodiagnóstico interno de la misma.
+							<br><br>Una vez finalizada la aplicación de todos los indicadores que el nivel seleccionado requiere, el sistema generará un <strong>Informe de Autodiagnóstico en RS&S;</strong>documento que reflejará y relacionará los resultados de toda la información consignada, y que solo podrá conocer la propia usuaria.
+							<br><br>¡ Bienvenido !
+						</td></tr>
+				</table>
+			{% endif %}
+
+
+			</div>
+		</td>
+	</tr>
+</table>
+
+			{% if errorMsg == '1' %}
+			<script>
+					alert("Usted puede realizar una encuesta cada 6 meses");
+			</script>
+			{% endif %}
+			{% if errorMsg == '2' %}
+			<script>
+					alert("Usted tiene al menos una encuesta pendiente");
+			</script>
+			{% endif %}
+			{% if errorMsg == '3' %}
+			<script>
+					alert("Su usuario se encuentra pendiente de validación");
+			</script>
+			{% endif %}
+
+{% endblock %}

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang=“es”>
+    <head>
+
+        <meta charset=“utf-8” />
+        <title> {% block titulo %} INDICAGRO {% endblock %}</title>
+
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/estilo.css' %}">
+
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+    {% block header %}
+    <script>
+    function errorLogin(){
+        alert("{{ form.non_field_errors }}");
+    }
+    </script>
+
+    <form action="/accounts/login/" method="post" id="login">
+    {% csrf_token %}
+   	<div class="boxCenter">
+        <table>
+            <tr>
+                <td>
+                    {% load static %}
+                    <a href="{% url 'usuarios:usuarios_home' %}" ><img src="{% static 'img/indicagro-02.png' %}"  style="margin: 0px 0px 0px 0px;"></a>
+                </td>
+                <td>
+                  
+                        <table style="margin: 0 auto;">
+                            <tr>
+                                <td>
+                                    <a href="{% static 'download/libro-indicadores.pdf' %}" style="text-decoration:none;margin:  0px 0px 0px 40px;" target="_blank"><input type="button" value="DESCARGAR LIBRO" class="boton11"></a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'usuarios:creditos' %}" style="text-decoration:none;margin:  0px 40px 0px 0px;"> <input type="button" value="CRÉDITOS" class="boton12"></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="{% url 'usuarios:simulador1' %}" style="text-decoration:none;margin:  0px 0px 0px 40px;"> <input type="button" value="SIMULADOR" class="boton11"></a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'usuarios:metodologia' %}" style="text-decoration:none;margin:  0px 40px 0px 0px;"> <input type="button" value="GUÍA DE USO" class="boton12"></a>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                </td>
+                <td>
+                    <div id="boxLoginHead" style="margin:  0px 0px 0px 30px;">
+                        <table >
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                           <input class="form-control" type="text" name="username" placeholder="CUIT (Ingrese sólo números)" style="width:150px;height:20px;margin:  5px 0px 0px 5px;">
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="password" name="password"  placeholder="CONTRASEÑA" style="width:150px;height:20px;margin:  5px 0px 0px 5px;">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <a href="{% url 'password_reset' %}" style="font-size:11px;margin:  5px 20px 0px 5px;">Olvidé mi contraseña</a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'usuarios:registrar' %}" style="text-decoration:none;"> <input type="button" value="REGISTRARSE" class="boton14"></a>
+                                        </td>
+                                        <td>
+                                            <input type="submit" value="INGRESAR" class="boton14">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+                {% if form.errors %}
+                {% for error in form.non_field_errors %}
+                    <script>
+                       alert("{{ error|escape }}");
+                    </script>
+                {% endfor %}
+            {% endif %}
+
+    </form>
+    {% endblock %}
+
+    {% block content %}
+
+    <a href="{% url 'logout' %}">Salir</a>
+    {% endblock %}
+
+    {% block footer %}
+<div id="boxFooter">
+
+        <table>
+            <tr>
+                <td>
+                            {% load static %}
+                            <img src="{% static 'img/logobolsafoot.png' %}" width="185" height="65" style="margin:  0px 0px 0px 40px">
+                </td>
+                <td>
+                <td align="left">
+                            {% load static %}
+                            <a href="https://www.google.com.ar/maps/place/Bolsa+y+C%C3%A1mara+de+Cereales+de+C%C/3%B3rdoba/@-31.4162746,-64.1774003,15z/data=!4m5!3m4!1s0x0:0xbf6fb57f3a4ae187!8m2!3d-31.4144515!4d-64.173739"><img src="{% static 'img/11.png' %}" width="35px" height="39px" style="margin:  0px 10px 0px 10px;"></a>
+                </td>
+                <td align="left">
+                            {% load static %}
+                            <a href="mailto:indicagro@bccba.org.ar"> <img src="{% static 'img/12.png' %}" width="60px" height="30px"></a>
+                </td>
+                <td align="left">
+                            {% load static %}
+                            <a href="https://twitter.com/BCCBA"> <img src="{% static 'img/13.png' %}" width="60px" height="30px"></a>
+                </td>
+                <td align="left">
+                            {% load static %}
+                            <a href="https://www.facebook.com/bccba.bolsadecerealesdecordoba"><img src="{% static 'img/14.png' %}" width="60px" height="30px"></a>
+                </td>
+
+
+                <td>
+                            {% load static %}
+                            <img src="{% static 'img/logoiarse.png' %}" width="148" height="114" style="margin:  0px 0px 0px 50px">
+                </td>
+
+                <td>
+                    {% load static %}
+                    <a href="https://www.google.com.ar/maps/place/Almte+Guillermo+Brown+245,+X5002IWE+C%C3%B3rdoba/@-31.4078076,-64.2212375,17z/data=!4m13!1m7!3m6!1s0x943298bd67311b89:0xb55bfb56b1ae8409!2sAlmte+Guillermo+Brown+245,+X5002IWE+C%C3%B3rdoba!3b1!8m2!3d-31.4078076!4d-64.2190488!3m4!1s0x943298bd67311b89:0xb55bfb56b1ae8409!8m2!3d-31.4078076!4d-64.2190488"><img src="{% static 'img/21.png' %}" width="35px" height="39px" style="margin:  0px 10px 0px 10px;"></a>
+                </td>
+                <td>
+                    {% load static %}
+                    <a href="mailto:mail@iarse.org"> <img src="{% static 'img/22.png' %}" width="60px" height="30px"></a>
+                </td>
+                <td>
+                    {% load static %}
+                    <a href="https://twitter.com/iarse?lang=es"><img src="{% static 'img/23.png' %}" width="60px" height="30px"></a>
+                </td>
+                <td>
+                    {% load static %}
+                    <a href="https://www.facebook.com/IARSE/"><img src="{% static 'img/24.png' %}" width="60px" height="30px"></a>
+                </td>
+
+
+            </tr>
+
+    </table>
+
+
+
+</div>
+    {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,1024 @@
+{% extends 'base.html' %}
+{% block javascript %}
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="//d3plus.org/js/d3.js"></script>
+
+    <!-- load D3plus after D3js -->
+    <script src="//d3plus.org/js/d3plus.js"></script>
+      {% load static %}
+	<script src="{% static 'js/radarChartOld.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jspdf.debug.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jspdf.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/addimage.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/png_support.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/png.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/zlib.js' %}"></script>
+
+<script type="text/javascript">
+        function CreaPDF(){
+            linea=30;
+            var pdf = new jsPDF();
+            var imgData1 = 'data:image/png;base64,{{ imagen1 }}';
+            pdf.addImage(imgData1, 'PNG', 40, 40, 150, 69);
+
+            var imgData2 = 'data:image/png;base64,{{ imagen2 }}';
+            pdf.addImage(imgData2, 'PNG', 140, 240, 58, 30);
+
+            pdf.setFontSize(30);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+
+            pdf.text(30, 150, 'Autodiagnóstico comparativo sobre ');
+            pdf.text(60, 170, ' indicadores del Agro');
+            linea=120;
+            linea=linea+20;
+
+            linea=linea+100;
+            pdf.setFontSize(10);
+            pdf.text(10, linea, 'CUIT: {{ evaluacion.usuario.username }}');
+            linea=linea+5;
+            pdf.text(10, linea, 'Empresa (Nombre Comercial): {{ perfil.empresaCom }}');
+            linea=linea+5;
+            pdf.text(10, linea, 'Empresa (Razón Social): {{ perfil.empresa }}');
+            linea=linea+5;
+            pdf.text(10, linea, 'Responsable: {{ perfil.nombre }}');
+            linea=linea+5;
+            pdf.text(10, linea, 'Nivel de encuesta: {{ evaluacion.rspMgr.encuesta.name }}');
+            linea=linea+5;
+            pdf.text(10, linea, 'Fecha: {{ evaluacion.fecha }}');
+
+            pdf.addPage();
+            pdf.setFontSize(20);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            //pdf.setTextColor(255, 0, 0);
+            linea=30;
+            pdf.text(10, linea, 'Acerca del Informe de Autodiagnóstico en RS&S');
+            linea=linea+15;
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            pdf.text(10, linea, 'Los Indicadores de Responsabilidad Social y Sustentabilidad para Empresas Agropecuarias – “IndicAgro” son una herramienta que');
+            linea=linea+5;
+            pdf.text(10, linea, 'posibilita conocer en qué medida se ha incorporado la Responsabilidad Social y la Sustentabilidad al negocio, ayudando al desarrollo ');
+            linea=linea+5;
+            pdf.text(10, linea, 'de estrategias, políticas y procesos para una adecuada gestión.');
+            linea=linea+15;
+            pdf.text(10, linea, 'Cabe destacar que si bien los resultados proporcionan medidas de desempeño para la Responsabilidad Social y la Sustentabilidad, la');
+            linea=linea+5;
+            pdf.text(10, linea, 'herramienta no se propone reconocer a las empresas como responsables o sustentables. ');
+            linea=linea+15;
+            pdf.text(10, linea, 'En este informe presentamos el autodiagnóstico de su empresa, obtenido desde la plataforma on-line de los Indicadores de ');
+            linea=linea+5;
+            pdf.text(10, linea, 'Responsabilidad Social y Sustentabilidad para Empresas Agropecuarias – “IndicAgro”.');
+            linea=linea+15;
+            pdf.text(10, linea, 'En base al proceso de autodiagnóstico y a la estructura de las encuestas respondidas, se incluyen en el siguiente informe: una ');
+            linea=linea+5;
+            pdf.text(10, linea, 'calificación de desempeño general, una calificación para cada “dimensión”, una calificación para cada “subtema” y una calificación ');
+            linea=linea+5;
+            pdf.text(10, linea, 'para cada indicador presente de acuerdo al nivel seleccionado (básico, amplio o comprensivo).')
+            linea=linea+15;
+            pdf.text(10, linea, 'Cabe destacar que la escala de calificación está comprendida entre 1 y 10 puntos. ')
+            linea=linea+5;
+            pdf.text(10, linea, 'De igual modo, se incluye información relacionada a la cantidad de indicadores que se evaluaron para cada uno de los estadios de ')
+            linea=linea+5;
+            pdf.text(10, linea, 'progreso viables de selección (que van desde el cumplimiento de la legislación vigente como base hasta el liderazgo reconocido por')
+            linea=linea+5;
+            pdf.text(10, linea, 'una buena práctica de Responsabilidad Social y Sustentabilidad determinada).')
+            linea=linea+15;
+            pdf.text(10, linea, 'Al final, se incluyen también gráficos que dan cuenta de la información mencionada.')
+            linea=linea+15;
+            pdf.text(10, linea, 'Esperamos que los aprendizajes y las reflexiones adquiridos del uso de los Indicadores de Responsabilidad Social y Sustentabilidad ')
+            linea=linea+5;
+            pdf.text(10, linea, 'para Empresas Agropecuarias – “IndicAgro” impulsen a la empresa hacia el fortalecimiento de una Gestión Responsable Orientada ')
+            linea=linea+5;
+            pdf.text(10, linea, 'a la Sustentabilidad – GROS. ')
+            linea=linea+15;
+            pdf.text(10, linea, 'Saludos, ')
+            linea=linea+15;
+            pdf.text(10, linea, 'Equipo IndicAgro')
+
+            pdf.setFontSize(8);
+            pdf.setFontType("bold");
+            pdf.text(10, 275, 'Bolsa de Cereales de Córdoba.')
+            pdf.setFontType("italic");
+            pdf.text(10, 278, 'Av. Gral. Francisco Ortíz de Ocampo 317, Código Postal: X5000FND – Ciudad de Córdoba – ARGENTINA')
+            pdf.text(10, 281, 'Teléfonos Cámara: +54(351) 4229637 / 4253716 / 4247256 - Teléfonos Bolsa: +54(351) 4224293 / 4214164 - Fax: +54(351) 4233772')
+            pdf.text(10, 284, 'www.bccba.com.ar - Email: contacto@bccba.com.ar - Facebook: Bolsa de Cereales de Córdoba - Twitter: @BCCBA')
+
+            pdf.addPage();
+
+            linea=30;
+            pdf.setFontSize(20);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            //pdf.setTextColor(255, 0, 0);
+            pdf.text(10, linea, 'Indicadores - {{ evaluacion.fecha }} ');
+            {% for nota in notas %}
+                        {% if nota.indicador.tipo.id == 3 %}
+                            linea=linea+15;
+                            pdf.text(10, linea, '{{ nota.indicador.name }}: {{ nota }}');
+                        {% endif %}
+            {% endfor %}
+            linea=linea+15;
+            pdf.text(10, linea, 'Dimensiones');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            {% for nota in notas %}
+                    {% if nota.indicador.tipo.id == 2 %}
+                        linea=linea+5;
+                         pdf.text(10, linea, '{{ nota.indicador.name }}: {{ nota }}');
+                    {% endif %}
+             {% endfor %}
+
+            linea=linea+15;
+            pdf.setFontSize(20);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            pdf.text(10, linea, 'Temas');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            {% for nota in notas %}
+                    {% if nota.indicador.tipo.id == 4 %}
+                        linea=linea+5;
+                         pdf.text(10, linea, '{{ nota.indicador.name }}: {{ nota }}');
+                    {% endif %}
+             {% endfor %}
+
+            linea=linea+15;
+            pdf.setFontSize(20);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            pdf.text(10, linea, 'Distribución por estadíos');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            {% for nota in notas %}
+                    {% if nota.indicador.tipo.id == 5 %}
+                        linea=linea+5;
+                         pdf.text(10, linea, '{{ nota.indicador.name }}: {{ nota }}');
+                    {% endif %}
+             {% endfor %}
+
+            pdf.setFontSize(8);
+            pdf.setFontType("bold");
+            pdf.text(10, 275, 'Bolsa de Cereales de Córdoba.')
+            pdf.setFontType("italic");
+            pdf.text(10, 278, 'Av. Gral. Francisco Ortíz de Ocampo 317, Código Postal: X5000FND – Ciudad de Córdoba – ARGENTINA')
+            pdf.text(10, 281, 'Teléfonos Cámara: +54(351) 4229637 / 4253716 / 4247256 - Teléfonos Bolsa: +54(351) 4224293 / 4214164 - Fax: +54(351) 4233772')
+            pdf.text(10, 284, 'www.bccba.com.ar - Email: contacto@bccba.com.ar - Facebook: Bolsa de Cereales de Córdoba - Twitter: @BCCBA')
+
+
+            pdf.addPage();
+            linea=0;
+            linea=linea+15;
+            pdf.setFontSize(20);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            pdf.text(10, linea, 'Indicadores');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            {% for nota in notas %}
+                    {% if nota.indicador.tipo.id == 1 %}
+                        linea=linea+5;
+                         pdf.text(10, linea, '{{ nota.indicador.orden }}- {{ nota.indicador.name }}: {{ nota }}');
+                    {% endif %}
+             {% endfor %}
+
+            pdf.setFontSize(8);
+            pdf.setFontType("bold");
+            pdf.text(10, 275, 'Bolsa de Cereales de Córdoba.')
+            pdf.setFontType("italic");
+            pdf.text(10, 278, 'Av. Gral. Francisco Ortíz de Ocampo 317, Código Postal: X5000FND – Ciudad de Córdoba – ARGENTINA')
+            pdf.text(10, 281, 'Teléfonos Cámara: +54(351) 4229637 / 4253716 / 4247256 - Teléfonos Bolsa: +54(351) 4224293 / 4214164 - Fax: +54(351) 4233772')
+            pdf.text(10, 284, 'www.bccba.com.ar - Email: contacto@bccba.com.ar - Facebook: Bolsa de Cereales de Córdoba - Twitter: @BCCBA')
+
+
+            pdf.addPage();
+            linea=30;
+            pdf.setFontSize(20);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            //pdf.setTextColor(255, 0, 0);
+            pdf.text(10, linea, 'Indicadores - {{ evaluacion1.fecha }} ');
+            {% for nota in notas1 %}
+                        {% if nota.indicador.tipo.id == 3 %}
+                            linea=linea+15;
+                            pdf.text(10, linea, '{{ nota.indicador.name }}: {{ nota }}');
+                        {% endif %}
+            {% endfor %}
+            linea=linea+15;
+            pdf.text(10, linea, 'Dimensiones');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            {% for nota in notas1 %}
+                    {% if nota.indicador.tipo.id == 2 %}
+                        linea=linea+5;
+                         pdf.text(10, linea, '{{ nota.indicador.name }}: {{ nota }}');
+                    {% endif %}
+             {% endfor %}
+
+            linea=linea+15;
+            pdf.setFontSize(20);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            pdf.text(10, linea, 'Temas');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            {% for nota in notas1 %}
+                    {% if nota.indicador.tipo.id == 4 %}
+                        linea=linea+5;
+                         pdf.text(10, linea, '{{ nota.indicador.name }}: {{ nota }}');
+                    {% endif %}
+             {% endfor %}
+
+            linea=linea+15;
+            pdf.setFontSize(20);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            pdf.text(10, linea, 'Distribución por estadíos');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            {% for nota in notas1 %}
+                    {% if nota.indicador.tipo.id == 5 %}
+                        linea=linea+5;
+                         pdf.text(10, linea, '{{ nota.indicador.name }}: {{ nota }}');
+                    {% endif %}
+             {% endfor %}
+
+            pdf.setFontSize(8);
+            pdf.setFontType("bold");
+            pdf.text(10, 275, 'Bolsa de Cereales de Córdoba.')
+            pdf.setFontType("italic");
+            pdf.text(10, 278, 'Av. Gral. Francisco Ortíz de Ocampo 317, Código Postal: X5000FND – Ciudad de Córdoba – ARGENTINA')
+            pdf.text(10, 281, 'Teléfonos Cámara: +54(351) 4229637 / 4253716 / 4247256 - Teléfonos Bolsa: +54(351) 4224293 / 4214164 - Fax: +54(351) 4233772')
+            pdf.text(10, 284, 'www.bccba.com.ar - Email: contacto@bccba.com.ar - Facebook: Bolsa de Cereales de Córdoba - Twitter: @BCCBA')
+
+
+
+            pdf.addPage();
+            linea=0;
+            linea=linea+15;
+            pdf.setFontSize(20);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            pdf.text(10, linea, 'Indicadores');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            {% for nota in notas %}
+                    {% if nota.indicador.tipo.id == 1 %}
+                        linea=linea+5;
+                         pdf.text(10, linea, '{{ nota.indicador.orden }}- {{ nota.indicador.name }}: {{ nota }}');
+                    {% endif %}
+             {% endfor %}
+
+            pdf.setFontSize(8);
+            pdf.setFontType("bold");
+            pdf.text(10, 275, 'Bolsa de Cereales de Córdoba.')
+            pdf.setFontType("italic");
+            pdf.text(10, 278, 'Av. Gral. Francisco Ortíz de Ocampo 317, Código Postal: X5000FND – Ciudad de Córdoba – ARGENTINA')
+            pdf.text(10, 281, 'Teléfonos Cámara: +54(351) 4229637 / 4253716 / 4247256 - Teléfonos Bolsa: +54(351) 4224293 / 4214164 - Fax: +54(351) 4233772')
+            pdf.text(10, 284, 'www.bccba.com.ar - Email: contacto@bccba.com.ar - Facebook: Bolsa de Cereales de Córdoba - Twitter: @BCCBA')
+
+            pdf.addPage();
+            linea=0;
+            var imgData = 'data:image/png;base64,{{ imagen }}';
+            pdf.addImage(imgData, 'PNG', 15, 40, 170, 200);
+            pdf.setFontSize(8);
+            pdf.setFontType("bold");
+            pdf.text(10, 275, 'Bolsa de Cereales de Córdoba.')
+            pdf.setFontType("italic");
+            pdf.text(10, 278, 'Av. Gral. Francisco Ortíz de Ocampo 317, Código Postal: X5000FND – Ciudad de Córdoba – ARGENTINA')
+            pdf.text(10, 281, 'Teléfonos Cámara: +54(351) 4229637 / 4253716 / 4247256 - Teléfonos Bolsa: +54(351) 4224293 / 4214164 - Fax: +54(351) 4233772')
+            pdf.text(10, 284, 'www.bccba.com.ar - Email: contacto@bccba.com.ar - Facebook: Bolsa de Cereales de Córdoba - Twitter: @BCCBA')
+
+            pdf.addPage();
+            pdf.setFontSize(20);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            //pdf.setTextColor(255, 0, 0);
+            linea=30;
+            pdf.text(10, linea, 'CREDITOS DE LA VERSION ORIGINAL (1.0)');
+            linea=linea+15;
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            pdf.text(10, linea, 'Indicadores de Responsabilidad Social y Sustentabilidad para Empresas Agropecuarias, es una publicación registrada bajo')
+            linea=linea+5;
+            pdf.text(10, linea, 'propiedad intelectual de la Bolsa de Cereales de Córdoba (BCCBA). A pedido de dicha entidad, la misma ha sido desarrollada')
+            linea=linea+5;
+            pdf.text(10, linea, 'por el Instituto Argentino de Responsabilidad Social Empresaria (IARSE).')
+
+
+            pdf.setFontSize(15);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            linea=linea+15;
+            pdf.text(10, linea, 'Propiedad intelectual');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            linea=linea+5;
+            pdf.text(10, linea, 'Bolsa de Cereales de Córdoba.')
+            linea=linea+5;
+            pdf.text(10, linea, 'Av. Gral. Francisco Ortíz de Ocampo 317, Código Postal: X5000FND – Ciudad de Córdoba – ARGENTINA- Teléfonos Cámara:')
+            linea=linea+5;
+            pdf.text(10, linea, 'Teléfonos Cámara: +54(351) 4229637 / 4253716 / 4247256 - Teléfonos Bolsa: +54(351) 4224293 / 4214164 - Fax: +54(351) 4233772')
+            linea=linea+5;
+            pdf.text(10, linea, 'www.bccba.com.ar ')
+            linea=linea+5;
+            pdf.text(10, linea, 'Email: contacto@bccba.com.ar ')
+            linea=linea+5;
+            pdf.text(10, linea, 'Facebook: Bolsa de Cereales de Córdoba ')
+            linea=linea+5;
+            pdf.text(10, linea, 'Twitter: @BCCBA')
+
+            pdf.setFontSize(15);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            linea=linea+15;
+            pdf.text(10, linea, 'Realización Técnica');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            linea=linea+5;
+            pdf.text(10, linea, 'Instituto Argentino de Responsabilidad Social Empresaria – IARSE ')
+            linea=linea+5;
+            pdf.text(10, linea, 'Almirante Brown 245 – Córdoba – ARGENTINA ')
+            linea=linea+5;
+            pdf.text(10, linea, 'Teléfonos: +54 351 4887314 ')
+            linea=linea+5;
+            pdf.text(10, linea, 'www.iarse.org ')
+            linea=linea+5;
+            pdf.text(10, linea, 'Email: mail@iarse.org ')
+
+
+            var imgData3 = 'data:image/png;base64,{{ imagen3 }}';
+            pdf.addImage(imgData3, 'PNG', 140, 110, 46, 32);
+
+            pdf.setFontSize(15);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            linea=linea+15;
+            pdf.text(10, linea, 'Dirección Académica del Proyecto y Coordinación Técnica:');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            linea=linea+5;
+            pdf.text(10, linea, 'Luis Alberto Ulla ')
+
+            pdf.setFontSize(15);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            linea=linea+15;
+            pdf.text(10, linea, 'Colaboradores del IARSE en el proyecto:');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            linea=linea+5;
+            pdf.text(10, linea, 'Federico Zarate ')
+            linea=linea+5;
+            pdf.text(10, linea, 'Alejandro Roca  ')
+            linea=linea+5;
+            pdf.text(10, linea, 'Julieta Ramírez ')
+
+            pdf.setFontSize(15);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            linea=linea+15;
+            pdf.text(10, linea, 'Colaboradores de la BCCBA en el proyecto');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            linea=linea+5;
+            pdf.text(10, linea, 'Graciela Stralla  ')
+            linea=linea+5;
+            pdf.text(10, linea, 'María Pía Carnero ')
+            linea=linea+5;
+            pdf.text(10, linea, 'Carla Spinazze ')
+            linea=linea+5;
+            pdf.text(10, linea, 'María Luz Fuentes ')
+            linea=linea+5;
+            pdf.text(10, linea, 'Ana Clara Rho ')
+            linea=linea+5;
+            pdf.text(10, linea, 'Gonzalo Agusto ')
+            linea=linea+5;
+            pdf.text(10, linea, 'Ramiro Farías ')
+
+
+            pdf.setFontSize(8);
+            pdf.setFontType("bold");
+            pdf.text(10, 275, 'Bolsa de Cereales de Córdoba.')
+            pdf.setFontType("italic");
+            pdf.text(10, 278, 'Av. Gral. Francisco Ortíz de Ocampo 317, Código Postal: X5000FND – Ciudad de Córdoba – ARGENTINA')
+            pdf.text(10, 281, 'Teléfonos Cámara: +54(351) 4229637 / 4253716 / 4247256 - Teléfonos Bolsa: +54(351) 4224293 / 4214164 - Fax: +54(351) 4233772')
+            pdf.text(10, 284, 'www.bccba.com.ar - Email: contacto@bccba.com.ar - Facebook: Bolsa de Cereales de Córdoba - Twitter: @BCCBA')
+
+
+            pdf.addPage();
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            //pdf.setTextColor(255, 0, 0);
+            linea=15;
+
+            pdf.setFontSize(15);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            linea=linea+15;
+            pdf.text(10, linea, 'Experta externa asociada al Equipo del IARSE:');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            linea=linea+5;
+            pdf.text(10, linea, 'Alicia Rolando  ')
+
+            pdf.setFontSize(15);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            linea=linea+15;
+            pdf.text(10, linea, 'Expertos Ad Honorem Consultados');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            linea=linea+5;
+            pdf.text(10, linea, 'Gloria Viotti ')
+            linea=linea+5;
+            pdf.text(10, linea, 'Alejandro Tobal ')
+            linea=linea+5;
+            pdf.text(10, linea, 'Carlos Ferrari ')
+            linea=linea+5;
+            pdf.text(10, linea, 'Vicente José Pablo Rea Pidcova ')
+
+
+            pdf.setFontSize(15);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            linea=linea+15;
+            pdf.text(10, linea, 'Dirección Académica del Software');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            linea=linea+5;
+            pdf.text(10, linea, 'Luis Ulla ')
+            linea=linea+5;
+            pdf.text(10, linea, 'Federico Zarate ')
+
+            pdf.setFontSize(15);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            linea=linea+15;
+            pdf.text(10, linea, 'Desarrollo Operativo del Software');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            linea=linea+5;
+            pdf.text(10, linea, 'Mauricio Morero y Federico Zárate ')
+
+            pdf.setFontSize(15);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            linea=linea+15;
+            pdf.text(10, linea, 'Agradecimientos especiales');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            linea=linea+5;
+            pdf.text(10, linea, 'A las autoridades y representantes del Ministerio de Agricultura de la Provincia de Córdoba. ')
+            linea=linea+5;
+            pdf.text(10, linea, 'A las autoridades, integrantes y expertos de AACREA y AAPRESID. Estas instituciones sumaron opiniones,  sugerencias y aportes')
+            linea=linea+5;
+            pdf.text(10, linea, 'para hacer más precisa y útil esta herramienta para las empresas agropecuarias. ')
+            linea=linea+5;
+            pdf.text(10, linea, 'Queda hecho el depósito que marca la Ley Nº 11.723. Derechos reservados ')
+            linea=linea+5;
+            pdf.text(10, linea, 'Solo está permitida la reproducción parcial del contenido de esta publicación citando la fuente y con la autorización previa por ')
+            linea=linea+5;
+            pdf.text(10, linea, 'escrito de la Bolsa de Cereales de Córdoba.')
+
+
+
+            pdf.setFontSize(15);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            linea=linea+15;
+            pdf.text(10, linea, 'Investigación y Desarrollo original');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            linea=linea+5;
+            pdf.text(10, linea, 'Luis Ulla – Alicia Rolando – Federico Zarate')
+
+            pdf.setFontSize(8);
+            pdf.setFontType("bold");
+            pdf.text(10, 275, 'Bolsa de Cereales de Córdoba.')
+            pdf.setFontType("italic");
+            pdf.text(10, 278, 'Av. Gral. Francisco Ortíz de Ocampo 317, Código Postal: X5000FND – Ciudad de Córdoba – ARGENTINA')
+            pdf.text(10, 281, 'Teléfonos Cámara: +54(351) 4229637 / 4253716 / 4247256 - Teléfonos Bolsa: +54(351) 4224293 / 4214164 - Fax: +54(351) 4233772')
+            pdf.text(10, 284, 'www.bccba.com.ar - Email: contacto@bccba.com.ar - Facebook: Bolsa de Cereales de Córdoba - Twitter: @BCCBA')
+
+            pdf.save('Indicadores.pdf');
+
+        }
+</script>
+
+{% endblock %}
+{% block body %}
+<div id="boxResultados2">
+    <div id="boxAzul"><h1>Informe comparativo de Auto-diagnóstico en RS&S</h1></div>
+    <br>
+    <input type="button" value="Exportar a PDF" class="boton4" onclick="javascript:CreaPDF();">
+
+    <p>NOTA</p>
+    <p>Posicione el cursor del mouse sobre cada dimensión/subtema para ver la nota del gráfico</p>
+
+                {% for nota in notas %}
+                    {% if nota.indicador.tipo.id == 3 %}
+                        <h2>Nota de Desempeño General: {{ nota }}</h2>
+                    {% endif %}
+                {% endfor %}
+</div>
+
+<div id="boxResultados2">
+<table>
+            <tr>
+             <td VALIGN=TOP align="center">
+                 <div id="boxAzul1"><h3>Dimensiones</h3></div>
+                             <div id="body1">
+	                            <div id="chart1"></div>
+                            </div>
+
+	<script>
+            var w = 700,
+	        h = 700;
+
+var colorscale = d3.scale.category10();
+
+//Legend titles
+var LegendOptions = ['{{ evaluacion.fecha }}','{{ evaluacion1.fecha }}'];
+
+//Data
+var d = [
+					  [//Dimensiones1
+					    {% for nota in notasDim %}
+			                {axis:"{{ nota.indicador.name }}",value:{{ nota }} },
+                        {% endfor %}
+					  ],
+					  [//Subtemas2
+					    {% for nota in notasDim1 %}
+			                {axis:"{{ nota.indicador.name }}",value:{{ nota }} },
+                        {% endfor %}
+					  ]
+					];
+
+//Options for the Radar chart, other than default
+var mycfg = {
+  w: w,
+  h: h,
+  maxValue: 10,
+  levels: 10,
+  ExtraWidthX: 300
+}
+
+//Call function to draw the Radar chart
+//Will expect that data is in %'s
+RadarChart.draw("#chart1", d, mycfg);
+
+////////////////////////////////////////////
+/////////// Initiate legend ////////////////
+////////////////////////////////////////////
+
+var svg = d3.select('#body1')
+	.selectAll('svg')
+	.append('svg')
+	.attr("width", w+300)
+	.attr("height", h)
+
+//Create the title for the legend
+var text = svg.append("text")
+	.attr("class", "title")
+	.attr('transform', 'translate(90,0)')
+	.attr("x", w - 70)
+	.attr("y", 10)
+	.attr("font-size", "12px")
+	.attr("fill", "#404040")
+	.text("Auto-evaluaciones");
+
+//Initiate Legend
+var legend = svg.append("g")
+	.attr("class", "legend")
+	.attr("height", 100)
+	.attr("width", 200)
+	.attr('transform', 'translate(90,20)')
+	;
+	//Create colour squares
+	legend.selectAll('rect')
+	  .data(LegendOptions)
+	  .enter()
+	  .append("rect")
+	  .attr("x", w - 65)
+	  .attr("y", function(d, i){ return i * 20;})
+	  .attr("width", 10)
+	  .attr("height", 10)
+	  .style("fill", function(d, i){ return colorscale(i);})
+	  ;
+	//Create text next to squares
+	legend.selectAll('text')
+	  .data(LegendOptions)
+	  .enter()
+	  .append("text")
+	  .attr("x", w - 52)
+	  .attr("y", function(d, i){ return i * 20 + 9;})
+	  .attr("font-size", "11px")
+	  .attr("fill", "#737373")
+	  .text(function(d) { return d; })
+	  ;
+    </script>
+             </td>
+            </tr>
+        <tr> <td VALIGN=TOP align="center">
+
+    <div id="body">
+        <div id="boxAzul1"><h3>Subtemas</h3></div>
+	  <div id="chart"></div>
+    </div>
+	
+	<script>
+            var w =     850,
+	        h = 850;
+
+var colorscale = d3.scale.category10();
+
+//Legend titles
+var LegendOptions = ['{{ evaluacion.fecha }}','{{ evaluacion1.fecha }}'];
+
+//Data
+var d = [
+					  [//Subtemas1
+					    {% for nota in notasTem %}
+			                {axis:"{{ nota.indicador.name }}",value:{{ nota }} },
+                        {% endfor %}
+					  ],
+					  [//Subtemas2
+					    {% for nota in notasTem1 %}
+			                {axis:"{{ nota.indicador.name }}",value:{{ nota }} },
+                        {% endfor %}
+					  ]
+					];
+
+//Options for the Radar chart, other than default
+var mycfg = {
+  w: w,
+  h: h,
+  maxValue: 10,
+  levels: 10,
+  ExtraWidthX: 300
+}
+
+//Call function to draw the Radar chart
+//Will expect that data is in %'s
+RadarChart.draw("#chart", d, mycfg);
+
+////////////////////////////////////////////
+/////////// Initiate legend ////////////////
+////////////////////////////////////////////
+
+var svg = d3.select('#body')
+	.selectAll('svg')
+	.append('svg')
+	.attr("width", w+300)
+	.attr("height", h)
+
+//Create the title for the legend
+var text = svg.append("text")
+	.attr("class", "title")
+	.attr('transform', 'translate(90,0)')
+	.attr("x", w - 70)
+	.attr("y", 10)
+	.attr("font-size", "12px")
+	.attr("fill", "#404040")
+	.text("Auto-evaluaciones");
+
+//Initiate Legend
+var legend = svg.append("g")
+	.attr("class", "legend")
+	.attr("height", 100)
+	.attr("width", 200)
+	.attr('transform', 'translate(90,20)')
+	;
+	//Create colour squares
+	legend.selectAll('rect')
+	  .data(LegendOptions)
+	  .enter()
+	  .append("rect")
+	  .attr("x", w - 65)
+	  .attr("y", function(d, i){ return i * 20;})
+	  .attr("width", 10)
+	  .attr("height", 10)
+	  .style("fill", function(d, i){ return colorscale(i);})
+	  ;
+	//Create text next to squares
+	legend.selectAll('text')
+	  .data(LegendOptions)
+	  .enter()
+	  .append("text")
+	  .attr("x", w - 52)
+	  .attr("y", function(d, i){ return i * 20 + 9;})
+	  .attr("font-size", "11px")
+	  .attr("fill", "#737373")
+	  .text(function(d) { return d; })
+	  ;
+    </script>
+
+            </td>
+        </tr>
+
+                         <tr>
+                            <td VALIGN=TOP align="center">
+                                <div id="boxAzul1"><h3>Distribución por estadíos</h3></div>
+                                <div id="viz"></div>
+							 <script>
+							  // sample data array
+							  var sample_data = [
+							    {"Estadío": 0, "Cantidad": {{ estadioNo1 }}, "type": "Estadío 1 - {{ evaluacion.fecha }}"},
+								{"Estadío": 1, "Cantidad": {{ estadio1 }}, "type": "Estadío 1 - {{ evaluacion.fecha }}"},
+								{"Estadío": 2, "Cantidad": {{ estadio2 }}, "type": "Estadío 2 - {{ evaluacion.fecha }}"},
+								{"Estadío": 3, "Cantidad": {{ estadio3 }}, "type": "Estadío 3 - {{ evaluacion.fecha }}"},
+								{"Estadío": 4, "Cantidad": {{ estadio4 }}, "type": "Estadío 4 - {{ evaluacion.fecha }}"},
+								{"Estadío": 0, "Cantidad": {{ estadioNo2 }}, "type": "Estadío 1 - {{ evaluacion1.fecha }}"},
+								{"Estadío": 1, "Cantidad": {{ estadio11 }}, "type": "Estadío 1 - {{ evaluacion1.fecha }}"},
+								{"Estadío": 2, "Cantidad": {{ estadio21 }}, "type": "Estadío 2 - {{ evaluacion1.fecha }}"},
+								{"Estadío": 3, "Cantidad": {{ estadio31 }}, "type": "Estadío 3 - {{ evaluacion1.fecha }}"},
+								{"Estadío": 4, "Cantidad": {{ estadio41 }}, "type": "Estadío 4 - {{ evaluacion1.fecha }}"}
+							  ]
+
+							  // instantiate d3plus
+							  var visualization = d3plus.viz()
+								.container("#viz")  // container DIV to hold the visualization
+								.data(sample_data)  // data to use with the visualization
+								.type("scatter")    // visualization type
+								.id("type")         // key for which our data is unique on
+								.x("Estadío")         // key for x-axis
+								.y("Cantidad")        // key for y-axis
+								.width(500)
+								.height(250)
+								.draw()             // finally, draw the visualization!
+							</script>
+                         </tr>
+
+
+</table>
+
+</div>
+
+
+<div id="boxResultados1">
+<h3>Auto evaluacion del {{ evaluacion.fecha }}</h3>
+    {% for nota in notas %}
+        {% if nota.indicador.tipo.id == 3 %}
+            <h3>{{ nota.indicador.name }}: {{ nota }}</h3>
+        {% endif %}
+    {% endfor %}
+<table>
+    <tr>
+        <td VALIGN=TOP>
+            <h3>Indicadores</h3>
+            <div class="datagrid">
+			<table>
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Nota</th>
+					</tr>
+				</thead>
+				<tbody>
+
+                {% for nota in notas %}
+                    {% if nota.indicador.tipo.id == 1 %}
+                    <tr>
+                        <td> {{ nota.indicador.orden }} - {{ nota.indicador.name }} </td><td> {{ nota }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </td>
+        <td VALIGN=TOP>
+            <table>
+                <tr><td VALIGN=TOP>
+                    <h3>Dimensiones</h3>
+                        <div class="datagrid">
+			<table>
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Nota</th>
+					</tr>
+				</thead>
+				<tbody>
+
+                {% for nota in notas %}
+                    {% if nota.indicador.tipo.id == 2 %}
+                    <tr>
+                        <td> {{ nota.indicador.name }} </td><td> {{ nota }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+                </td></tr>
+                <tr><td VALIGN=TOP>
+                    <table><tr><td>
+                    <h3>Temas</h3>
+                        <div class="datagrid">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Nota</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for nota in notas %}
+                                {% if nota.indicador.tipo.id == 4 %}
+                                <tr>
+                                    <td> {{ nota.indicador.name }} </td><td> {{ nota }}</td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                            </div>
+                    </td></tr>
+                    </table>
+
+                </td></tr>
+                <tr><td VALIGN=TOP>
+                    <table><tr><td>
+                        <h3>Distribución por estadíos</h3>
+                        <div class="datagrid">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Nota</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for nota in notas %}
+                                {% if nota.indicador.tipo.id == 5 %}
+                                <tr>
+                                    <td> {{ nota.indicador.name }} </td><td> {{ nota }}</td>
+                                </tr>
+
+                                {% endif %}
+                            {% endfor %}
+                             <tr>
+                                    <td> No se identifica con algún estadío: </td><td> {{ estadioNo1 }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </div>
+
+                            </td></tr>
+                        </table>
+                    </td></tr>
+                    </table>
+        </td>
+	</tr>
+</table>
+
+</div>
+
+<div id="boxResultados1">
+<h3>Auto evaluacion del {{ evaluacion1.fecha }}</h3>
+    {% for nota in notas1 %}
+        {% if nota.indicador.tipo.id == 3 %}
+            <h3>{{ nota.indicador.name }}: {{ nota }}</h3>
+        {% endif %}
+    {% endfor %}
+<table>
+    <tr>
+        <td VALIGN=TOP>
+            <h3>Indicadores</h3>
+            <div class="datagrid">
+			<table>
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Nota</th>
+					</tr>
+				</thead>
+				<tbody>
+
+                {% for nota in notas1 %}
+                    {% if nota.indicador.tipo.id == 1 %}
+                    <tr>
+                        <td> {{ nota.indicador.orden }} - {{ nota.indicador.name }} </td><td> {{ nota }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </td>
+        <td VALIGN=TOP>
+            <table>
+                <tr><td VALIGN=TOP>
+                    <h3>Dimensiones</h3>
+                        <div class="datagrid">
+			<table>
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Nota</th>
+					</tr>
+				</thead>
+				<tbody>
+
+                {% for nota in notas1 %}
+                    {% if nota.indicador.tipo.id == 2 %}
+                    <tr>
+                        <td> {{ nota.indicador.name }} </td><td> {{ nota }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+                </td></tr>
+                <tr><td VALIGN=TOP>
+                    <table><tr><td>
+                    <h3>Temas</h3>
+                        <div class="datagrid">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Nota</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for nota in notas1 %}
+                                {% if nota.indicador.tipo.id == 4 %}
+                                <tr>
+                                    <td> {{ nota.indicador.name }} </td><td> {{ nota }}</td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                            </div>
+                    </td></tr>
+                    </table>
+
+                </td></tr>
+                <tr><td VALIGN=TOP>
+                    <table><tr><td>
+                        <h3>Distribución por estadíos</h3>
+                        <div class="datagrid">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for nota in notas1 %}
+                                {% if nota.indicador.tipo.id == 5 %}
+                                <tr>
+                                    <td> {{ nota.indicador.name }} </td><td> {{ nota }}</td>
+                                </tr>
+
+                                {% endif %}
+                            {% endfor %}
+                            <tr>
+                                    <td> No se identifica con algún estadío: </td><td> {{ estadioNo2 }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </div>
+
+                            </td></tr>
+                        </table>
+                    </td></tr>
+                    </table>
+        </td>
+	</tr>
+</table>
+
+</div>
+{% endblock %}

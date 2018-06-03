@@ -1,0 +1,92 @@
+{% extends 'base/base.html' %}
+{% block javascript %}
+
+<script>
+    function errorLogin(){
+        alert("{{ form.non_field_errors }}");
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {% load static %}
+    <div id="indicagro">
+        <img src="{% static 'img/indicadores2.png' %}">
+    </div>
+
+    <div id="boxLogin">
+        <table>
+            <tr>
+
+                INDICADORES DE <strong>RESPONSABILIDAD SOCIAL</strong> Y <strong>SUSTENTABILIDAD </strong>PARA EL AGRO
+
+            </tr>
+            <tr>
+                <td>
+                        <input class="form-control" type="text" name="username" placeholder="CUIT (Ingrese sólo números)" style="padding:  0px 20% 0px 20%;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="form-control" type="password" name="password"  placeholder="CONTRASEÑA" style="padding:  0px 20% 0px 20%;">
+                </td>
+             </tr>
+            <tr>
+                <td>
+                         <button type="submit" class="boton2" >Ingresar</button>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <a href="{% url 'password_reset' %}" style="text-decoration:none;">Olvidé mi contraseña</a>
+                </td>
+             </tr>
+            <tr>
+                <td align="center">
+                    <a href="{% url 'usuarios:creditos' %}" style="text-decoration:none;">Créditos</a>
+                    <a href="{% url 'usuarios:metodologia' %}" style="text-decoration:none;"> - Guía de uso</a>
+                    <a href="mailto:indicagro@bccba.org.ar" style="text-decoration:none;"> - Contacto</a>
+                </td>
+            </tr>
+            <tr>
+                <table>
+                    <tr>
+                        <td>
+                            <a href="{% url 'usuarios:registrar' %}" style="text-decoration:none;"> <input type="button" value="Registrarse" class="boton3"></a>
+                         </td>
+                         <td>
+                            <a href="{% url 'usuarios:simulador1' %}" style="text-decoration:none;"> <input type="button" value="Acceder al simulador" class="boton4"></a>
+                         </td>
+                    </tr>
+                </table>
+            </tr>
+        </table>
+
+        {% if form.errors %}
+            {% for error in form.non_field_errors %}
+                <script>
+                   alert("{{ error|escape }}");
+                </script>
+            {% endfor %}
+        {% endif %}
+    </div>
+</form>
+
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+        {% if message.tags %}
+            <script>
+                   alert("{{ message }}");
+            </script>
+        {% endif %}
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+
+{% endblock %}

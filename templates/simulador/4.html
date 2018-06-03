@@ -1,0 +1,590 @@
+{% extends 'base/base.html' %}
+{% block javascript %}
+
+
+{% endblock %}
+{% block content %}
+
+
+<div id="boxResultados4">
+    <table>
+        <tr>
+            <table align="center">
+                <tr>
+                    <td>
+                        <h2>Informe de Auto-diagnóstico en RS&S (Las notas aquí mostradas son a modo de ejemplo)</h2>
+                    </td>
+                </tr>
+            </table>
+        </tr>
+        <tr>
+                <table align="center">
+                        <tr>
+                            <td>
+                                {% load static %}
+                                <img src="{% static 'img/lineaazul.png' %}" >
+                            </td>
+                        </tr>
+                </table>
+            </tr>
+            <tr>
+                <table align="center">
+                        <tr>
+                            <td>
+                                <input type="button" value="EXPORTAR A PDF" class="boton19" onclick="javascript:CreaPDF();" style="margin: 10px 10px 10px 10px;">
+                            </td>
+                            <td>
+                                <input type="button" value="VER RESPUESTAS" class="boton20" onclick="javascript:CreaPDF();" style="margin: 10px 10px 10px 10px;">
+                            </td>
+                        </tr>
+                </table>
+
+            </tr>
+            <tr>
+                <table style="margin: 0px 0px 0px 120px">
+                        <tr>
+                            <td>
+                                <p>NOTA</p>
+                                <p>Posicione el cursor del mouse sobre cada dimensión/subtema para ver la nota del gráfico </p>
+                                <p>Nota de Desempeño General: 6.48</p>
+                            </td>
+                        </tr>
+                </table>
+            </tr>
+            <tr>
+                <table align="center">
+                        <tr>
+                            <td>
+                                {% load static %}
+                                <img src="{% static 'img/lineaazul.png' %}" >
+                            </td>
+                        </tr>
+                </table>
+            </tr>
+            <tr>
+                <table align="center">
+                        <tr>
+                            <td>
+                                {% load static %}
+                                <img src="{% static 'img/graficosimulador1.png' %}">
+                            </td>
+                        </tr>
+                </table>
+            </tr>
+            <tr>
+                <table align="center">
+                        <tr>
+                            <td>
+                                {% load static %}
+                                <img src="{% static 'img/lineaazul.png' %}" >
+                            </td>
+                        </tr>
+                </table>
+            </tr>
+    </table>
+    
+<table align="center">
+    <tr>
+        <td VALIGN=TOP>
+            <table>
+                <tr>
+                    <td>
+
+            <h3>INDICADORES</h3>
+            <div class="datagrid">
+			<table>
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Nota</th>
+					</tr>
+				</thead>
+				<tbody>
+
+
+
+                    <tr>
+                        <td> 1- Misión - Visión - Valores </td><td> 10.00</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td> 1- Prácticas Anticorrupción y Anticoima </td><td> 10.00</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td> 1- Mapeo de los Impactos de la Operación y Gestión de Riesgos </td><td> 10.00</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td> 1- Relaciones con Trabajadores Propios </td><td> 10.00</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td> 1- Relaciones con Trabajadores tercerizados / subcontratados / estacionales </td><td> 10.00</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td> 1- Política de Remuneración, Prestaciones y Carrera </td><td> 10.00</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td> 1- Cuidados de Salud, Seguridad y Condiciones de Trabajo </td><td> 10.00</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td> 1- Condiciones de Trabajo, Calidad de Vida y Jornada Laboral </td><td> 10.00</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td> 1- Compromiso con el Futuro de los Niños </td><td> 10.00</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td> 1- Compromiso con la Equidad y la No Discriminación Racial o por Origen Nacional (Xenofobia) </td><td> 10.00</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td> 1- Uso Sustentable de los Recursos: Suelo </td><td> 10.00</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td> 1- Uso Sustentable y Seguro de Insumos de síntesis química y natural. </td><td> 10.00</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td> 1- Uso sustentable de la Biodiversidad y Restauración de Hábitats Naturales: Bosques Nativos (Ley de Bosques) </td><td> 10.00</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td> 1- Cuidado de la Inocuidad de los Alimentos y de las Prácticas Productivas que podrían afectarlos. </td><td> 10.00</td>
+                    </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </tbody>
+            </table>
+            </div>
+            </td>
+                </tr>
+            </table>
+        </td>
+        </tr>
+        <tr>        
+        <td VALIGN=TOP>
+            <table>
+                <tr><td VALIGN=TOP>
+                    <table ><tr><td VALIGN=TOP>
+                    <h3>TEMAS</h3>
+                        <div class="datagrid">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Nota</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                <tr>
+                                    <td> Visión y estrategia </td><td> 10.00</td>
+                                </tr>
+
+
+
+                                <tr>
+                                    <td> Relaciones transparentes con la sociedad </td><td> 10.00</td>
+                                </tr>
+
+
+
+                                <tr>
+                                    <td> Integración de la RSyS a la estrategia del negocio </td><td> 10.00</td>
+                                </tr>
+
+
+
+                                <tr>
+                                    <td> Trabajo decente </td><td> 10.00</td>
+                                </tr>
+
+
+
+                                <tr>
+                                    <td> Salud y seguridad en el trabajo y calidad de vida </td><td> 10.00</td>
+                                </tr>
+
+
+
+                                <tr>
+                                    <td> Derechos humanos y respeto al individuo </td><td> 10.00</td>
+                                </tr>
+
+
+
+                                <tr>
+                                    <td> Buenas prácticas agropecuarias </td><td> 10.00</td>
+                                </tr>
+
+
+
+                                <tr>
+                                    <td> Gerenciamiento del impacto ambiental </td><td> 10.00</td>
+                                </tr>
+
+
+
+                                <tr>
+                                    <td> Salud y seguridad del consumidor </td><td> 10.00</td>
+                                </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+                            </tbody>
+                        </table>
+                            </div>
+                    </td>
+                    <td>
+                        <h3>DIMENSIONES</h3>
+                        <div class="datagrid">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Nota</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <tr>
+                        <td> Valores, transparencia y gestión </td><td> 10.00</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td> Prácticas de empleo y trabajo digno </td><td> 10.00</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td> Sustentabilidad de las prácticas agrícolas - ganaderas </td><td> 10.00</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td> Relaciones con clientes y otros productores </td><td> 10.00</td>
+                    </tr>
+
+
+
+
+                </tbody>
+            </table>
+            </div>
+            <h3>DISTRIBUCIÓN POR ESTADÍOS</h3>
+                <table>
+                    <tr>
+                        <td>
+
+                        <div class="datagrid">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                <tr>
+                                    <td> Estadío 1 </td><td> 0.00</td>
+                                </tr>
+
+
+
+
+                                <tr>
+                                    <td> Estadío 2 </td><td> 0.00</td>
+                                </tr>
+
+
+
+
+                                <tr>
+                                    <td> Estadío 3 </td><td> 0.00</td>
+                                </tr>
+
+
+
+
+                                <tr>
+                                    <td> Estadío 4 </td><td> 14.00</td>
+                                </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                <tr>
+                                    <td> No se identifica con algún estadío:</td> <td>1.00</td>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                        </td>
+                    </tr>
+                </table>
+                            </td></tr>
+                        </table>
+                    </td></tr>
+                    </table>
+                    </td>
+                    </tr>
+                    </table>
+
+                </td></tr>
+                    
+</div>
+
+
+
+	<div id="push"></div> <!-- #push goes inside container -->
+	</div> <!-- /container -->
+
+	<footer class="footer">
+		<div class="container">
+
+
+		</div>
+	</footer>
+	<!-- Le javascript -->
+
+
+
+  </body>
+</html>
+
+{% endblock %}

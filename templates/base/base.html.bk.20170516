@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang=“es”>
+    <head>
+
+        <meta charset=“utf-8” />
+        <title> {% block titulo %} INDICAGRO {% endblock %}</title>
+
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/estilo.css' %}">
+
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+    {% block header %}
+
+
+    {% endblock %}
+
+    {% block content %}
+
+    <a href="{% url 'logout' %}">Salir</a>
+    {% endblock %}
+
+    {% block footer %}
+<div id="boxFull1">
+    <table>
+            <tr>
+
+
+                        <td>
+                            {% load static %}
+                            <img src="{% static 'img/logobolsafoot.png' %}" width="185" height="65">
+                        </td>
+                        <td>
+                            <div id="footerDatos">
+                                <strong>Bolsa de Cereales de Córdoba.</strong><br>Av. Gral. Francisco Ortíz de Ocampo 317, Código Postal: X5000FND – Ciudad de Córdoba – ARGENTINA- Teléfonos Cámara: +54(351) 4229637 / 4253716 / 4247256 <br>Teléfonos Bolsa: +54(351) 4224293 / 4214164 - Fax: +54(351) 4233772 - <a href="http://www.bccba.com.ar">www.bccba.com.ar</a> - Email: <a href="mailto:indicagro@bccba.com.ar">indicagro@bccba.com.ar</a> - Facebook: <a href="https://es-la.facebook.com/bccba.bolsadecerealesdecordoba/">Bolsa de Cereales de Córdoba</a> - Twitter: <a href="https://twitter.com/bccba?lang=es">@BCCBA</a>
+                            </div>
+                        </td>
+                        <td>
+                            {% load static %}
+                            <img src="{% static 'img/footer1.png' %}">
+                        </td>
+            </tr>
+         <tr>
+                        <td>
+                            {% load static %}
+                            <img src="{% static 'img/logoiarse.png' %}" width="148" height="114">
+                        </td>
+                        <td>
+                            <div id="footerDatos">
+                                <strong>Instituto Argentino de Responsabilidad Social Empresaria – IARSE</strong><br>Almirante Brown 245 – Córdoba – ARGENTINA  –  Teléfonos: +54 351 4887314 <br> <a href="http://www.iarse.org">www.iarse.org</a> - Email: <a href="mailto:mail@iarse.org">mail@iarse.org</a>
+                            </div>
+                        </td>
+                        <td>
+                            {% load static %}
+                            <img src="{% static 'img/footer2.png' %}">
+                        </td>
+
+        </tr>
+
+    </table>
+</div>
+    {% endblock %}
+    </body>
+</html>

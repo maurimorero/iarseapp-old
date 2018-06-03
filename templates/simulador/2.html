@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %}
+{% block javascript %}
+
+
+{% endblock %}
+{% block content %}
+
+    <div id="boxEncuestaIndex">
+    <h1>Encuesta de indicadores</h1><br>
+
+    <p>NOTA</p>
+    <p>- Haga click en cada uno de los subtemas para comenzar a responder las preguntas asociadas a cada uno de ellos</p>
+    <p>- Debe completar las respuestas de todos los subtemas e indicadores para finalizar la encuesta</p>
+    </div>
+
+
+    <div id="boxRegistro">
+
+        <h2>VALORES - TRANSPARENCIA Y GESTIÓN</h2>
+                        <a href="{% url 'usuarios:simulador3' %}">Visión y estrategia</a><br>
+                        <a href="{% url 'usuarios:simulador3' %}">Relaciones transparentes con la sociedad</a><br>
+                        <a href="{% url 'usuarios:simulador3' %}">Integración de la RS&amp;S a la estrategia del negocio</a><br>
+        <h2>PRÁCTICAS DE EMPLEO Y TRABAJO DIGNO</h2>
+                        <a href="{% url 'usuarios:simulador3' %}">Trabajo decente</a><br>
+                        <a href="{% url 'usuarios:simulador3' %}">Salud y seguridad en el trabajo y calidad de vida</a><br>
+                        <a href="{% url 'usuarios:simulador3' %}">Derechos humanos y respeto al individuo</a><br>
+        <h2>SUSTENTABILIDAD DE LAS PRÁCTICAS AGRÍCOLAS - GANADERAS</h2>
+                        <a href="{% url 'usuarios:simulador3' %}">Buenas prácticas agropecuarias  orientadas a la sustentabilidad</a><br>
+                        <a href="{% url 'usuarios:simulador3' %}">Buenas prácticas ganaderas orientadas a la sustentabilidad</a><br>
+                        <a href="{% url 'usuarios:simulador3' %}">Gerenciamiento del impacto ambiental</a><br>
+        <h2>RELACIÓN CON CLIENTES Y OTROS PRODUCTORES</h2>
+                        <a href="{% url 'usuarios:simulador3' %}">Salud y seguridad del consumidor</a><br>
+        <form method="post" id="response">
+        <input type='hidden' name='csrfmiddlewaretoken' value='1Cm46NbMR2GvyI5Nh8oUvXfgn1D3w5r0eC5bQp3mbqJ332HLNGWMZpxuOfNUAK6z' />
+        <p><label for="id_comentarios">Comentario sobre el proceso de respuesta (opcional):</label> <textarea cols="40" id="id_comentarios" name="comentarios" rows="10">
+</textarea></p>
+
+    </form>
+        <br><br>
+        <input type="button" value="Terminar para obtener informe de autodiagnóstico" class="boton" onclick="window.location='{% url 'usuarios:simulador4' %}/';">
+        <br>
+    </div>
+{% endblock %}
+

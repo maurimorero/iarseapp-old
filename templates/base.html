@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<meta charset="utf-8">
+	<title>INDICAGRO</title>
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+	   {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/estilo.css' %}">
+	  {% block javascript %}
+
+	  {% endblock %}
+
+  </head>
+{% load static %}
+
+  <body>
+  	<div class="boxCenterNav">
+	<nav>
+	 <ul class="fullnav">
+		 <table align="center">
+			 <tr>
+
+
+	  <td><li>
+		  {% load static %}
+	   		<a href="{% url 'usuarios:usuarios_home' %}" ><img src="{% static 'img/indicadores2.png' %}" width="282px" height="145px"></a>
+	  </li>
+	 </td>
+	  <td align="right"><li>
+		  <a href="#" class="boton16">¡ COMENZAR ENCUESTA !</a>
+	   <ul>
+		   <table align="center">
+			   <tr>
+				   <td>
+						<li>
+						 <a href="{% url 'surveys:encuesta_completa' 2 %}"  title="Nivel Básico: Contempla un total de 15 indicadores para una auto evaluación elemental en materia de RS&S. Se recomienda para una pequeña empresa." >NIVEL BÁSICO - </a>
+						</li>
+				   </td>
+					<td>
+						<li>
+						 <a href="{% url 'surveys:encuesta_completa' 3 %}" title="Nivel Amplio: Contempla un total de 30 indicadores para una autoevaluación en materia de RS&S. Se recomienda para una mediana empresa.">NIVEL AMPLIO - </a>
+						</li>
+				   </td>
+				   <td>
+						<li>
+						 <a href="{% url 'surveys:encuesta_completa' 1 %}" title="Nivel Comprensivo: Contempla un total de 50 indicadores para una autoevaluación exhaustiva en materia de RS&S. Se recomienda para una gran empresa.">NIVEL COMPRENSIVO</a>
+						</li>
+			   </td>
+			   </tr>
+		   </table>
+	   </ul>
+	  </li>
+	 </td>
+
+		 <td>
+			 <table>
+				 <tr>
+					 <td>
+						 <li>
+							 <a href="{% url 'usuarios:metodologia1' %}" class="boton17" >GUÍA DE USO</a>
+						</li>
+					 </td>
+				 </tr>
+				 <tr>
+					 <td>
+							 <li>
+						   <a href="#" class="boton17">CONSULTAR INDICADORES</a>
+						   <ul>
+							   <table align="center">
+								   <tr>
+									   <td>
+											<li>
+												<a href="{% url 'indicadores:indicadores' 2 %}">NIVEL BÁSICO - </a>
+
+											</li>
+									   </td>
+									<td>
+										<li>
+											<a href="{% url 'indicadores:indicadores' 3 %}">NIVEL AMPLIO - </a>
+										</li>
+								   </td>
+									<td>
+										<li>
+											 <a href="{% url 'indicadores:indicadores' 1 %}">NIVEL COMPRENSIVO</a>
+										</li>
+								   </td>
+								   </tr>
+							   </table>
+						   </ul>
+						  </li>
+					 </td>
+				 </tr>
+			 </table>
+
+		 </td>
+
+		 <td>
+			 <table>
+				 <tr>
+					 <td>
+						 <li >
+							<a href="{% url 'usuarios:creditos1' %}" class="boton17">CRÉDITOS</a>
+						 </li>
+					 </td>
+				 </tr>
+				 <tr>
+					 <td>
+						 <li>
+							<a href="{% url 'usuarios:usuarios_datos' %}" class="boton18"> {{ request.user.profile.empresa }} </a>
+						 </li>
+					 </td>
+				 </tr>
+			 </table>
+
+			</td>
+				 <td>
+			 <table>
+				 <tr>
+					 <td>
+						 <li >
+							<a href="{% static 'download/libro-indicadores.pdf' %}" class="boton18">DESCARGAR LIBRO</a>
+						 </li>
+					 </td>
+				 </tr>
+				 <tr>
+					 <td>
+						 <li>
+							<a href="{% url 'logout' %}" class="boton18">SALIR</a>
+						 </li>
+					 </td>
+				 </tr>
+			 </table>
+
+			</td>
+	 	{% if request.user.is_superuser %}
+		 	<td><li>
+			   <a href="#" class="boton16">ADMIN</a>
+			   <ul>
+					<li>
+				 		<a href="{% url 'indicadores:consultaconsolidada' %}" > CONSULTA CONSOLIDADA </a>
+					</li>
+				</ul>
+		 	</li>
+		 	</td>
+	 	{% endif %}
+	 </tr>
+		 </table>
+	 </ul>
+
+	</nav>
+	</div>
+
+
+
+	<div class="boxCenter">
+		
+	{% block body %}
+	{% endblock %}
+
+	<div id="push"></div> <!-- #push goes inside container -->
+	</div> <!-- /container -->
+	<!-- Le javascript -->
+
+	{% block extrajs %}
+	{% endblock %}
+      {% block footer %}
+<div id="boxFooter">
+
+        <table>
+            <tr>
+                <td>
+                            {% load static %}
+                            <img src="{% static 'img/logobolsafoot.png' %}" width="185" height="65" style="margin:  0px 0px 0px 40px">
+                </td>
+                <td>
+                <td align="left">
+                            {% load static %}
+                            <a href="https://www.google.com.ar/maps/place/Bolsa+y+C%C3%A1mara+de+Cereales+de+C%C/3%B3rdoba/@-31.4162746,-64.1774003,15z/data=!4m5!3m4!1s0x0:0xbf6fb57f3a4ae187!8m2!3d-31.4144515!4d-64.173739"><img src="{% static 'img/11.png' %}" width="35px" height="39px" style="margin:  0px 10px 0px 10px;"></a>
+                </td>
+                <td align="left">
+                            {% load static %}
+                            <a href="mailto:indicagro@bccba.org.ar"> <img src="{% static 'img/12.png' %}" width="60px" height="30px"></a>
+                </td>
+                <td align="left">
+                            {% load static %}
+                            <a href="https://twitter.com/BCCBA"> <img src="{% static 'img/13.png' %}" width="60px" height="30px"></a>
+                </td>
+                <td align="left">
+                            {% load static %}
+                            <a href="https://www.facebook.com/bccba.bolsadecerealesdecordoba"><img src="{% static 'img/14.png' %}" width="60px" height="30px"></a>
+                </td>
+
+
+                <td>
+                            {% load static %}
+                            <img src="{% static 'img/logoiarse.png' %}" width="148" height="114" style="margin:  0px 0px 0px 50px">
+                </td>
+
+                <td>
+                    {% load static %}
+                    <a href="https://www.google.com.ar/maps/place/Almte+Guillermo+Brown+245,+X5002IWE+C%C3%B3rdoba/@-31.4078076,-64.2212375,17z/data=!4m13!1m7!3m6!1s0x943298bd67311b89:0xb55bfb56b1ae8409!2sAlmte+Guillermo+Brown+245,+X5002IWE+C%C3%B3rdoba!3b1!8m2!3d-31.4078076!4d-64.2190488!3m4!1s0x943298bd67311b89:0xb55bfb56b1ae8409!8m2!3d-31.4078076!4d-64.2190488"><img src="{% static 'img/21.png' %}" width="35px" height="39px" style="margin:  0px 10px 0px 10px;"></a>
+                </td>
+                <td>
+                    {% load static %}
+                    <a href="mailto:mail@iarse.org"> <img src="{% static 'img/22.png' %}" width="60px" height="30px"></a>
+                </td>
+                <td>
+                    {% load static %}
+                    <a href="https://twitter.com/iarse?lang=es"><img src="{% static 'img/23.png' %}" width="60px" height="30px"></a>
+                </td>
+                <td>
+                    {% load static %}
+                    <a href="https://www.facebook.com/IARSE/"><img src="{% static 'img/24.png' %}" width="60px" height="30px"></a>
+                </td>
+
+
+            </tr>
+
+    </table>
+
+
+
+</div>
+    {% endblock %}
+  </body>
+</html>
+

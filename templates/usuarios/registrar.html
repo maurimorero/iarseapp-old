@@ -1,0 +1,272 @@
+{% extends 'base/base.html' %}
+{% block javascript %}
+
+
+{% endblock %}
+{% block content %}
+<script type="text/javascript"> 
+  function validarCuit(sCUIT) 
+	{ 
+	    var aMult   = '6789456789'; 
+	    var aMult   = aMult.split(''); 
+	    var sCUIT   = String(sCUIT); 
+	    var iResult = 0; 
+	    var aCUIT = sCUIT.split(''); 
+	     
+	    if (aCUIT.length == 11) 
+	    { 
+	        // La suma de los productos 
+	        for(var i = 0; i <= 9; i++) 
+	        { 
+	            iResult += aCUIT[i] * aMult[i]; 
+	        } 
+	        // El módulo de 11 
+	        iResult = (iResult % 11); 
+	         
+	        // Se compara el resultado con el dígito verificador 
+	        return (iResult == aCUIT[10]); 
+	    }     
+	    return false; 
+	}  
+</script>  		
+<script type="text/javascript">
+function Guardar(){
+    if(document.getElementById('100').checked)
+    {	
+    	cuit=document.getElementById('id_username').value;
+    	if(validarCuit(cuit))
+        	document.getElementById("response").submit();
+        else
+        	alert("Por favor, ingrese un CUIT/CUIL válido (sin guiones ni espacios)");
+    }
+    else
+    {action="/accounts/register/"
+        alert("Debe aceptar los términos y condiciones de privacidad para registrarse");
+    }
+};
+</script>
+<div id="boxRegistro1">
+<form action="/usuarios/registrar/" method="post" id="response">
+    {% csrf_token %}
+
+        <table>
+            <tr>
+                <table align="center">
+                        <tr>
+                            <td>
+                                <h3>REGISTRARSE</h3>
+                            </td>
+                        </tr>
+                </table>
+            </tr>
+            <tr>
+                <table align="center">
+                        <tr>
+                            <td>
+                                {% load static %}
+                                <img src="{% static 'img/lineaazul.png' %}" >
+                            </td>
+                        </tr>
+                </table>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td align="left">
+                                <div style="margin: 5px 0px 0px 110px;font-size:12px;">Empresa (Razón social)</dir>
+                            </td>
+                            <td align="left">
+                                <div style="margin: 5px 0px 0px 20px;font-size:12px;">Empresa (Nombre comercial)</dir>
+                            </td>
+                            <td align="left">
+                                <div style="margin: 5px 0px 0px 20px;font-size:12px;">CUIT de la empresa(Solo números - login)</dir>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left">
+                               <div style="margin: 0px 0px 5px 110px;font-size:12px;">{{ profile_form.empresa }} {{ profile_form.empresa.errors }}</dir>
+                            </td >
+                            <td align="left">
+                               <div style="margin: 0px 0px 5px 20px;font-size:12px;">{{ profile_form.empresaCom }} {{ profile_form.empresaCom.errors }}</dir>
+                            </td>
+                            <td align="left">
+                                <div style="margin: 0px 0px 5px 20px;font-size:12px;">{{ user_form.username }} {{ user_form.username.errors }}</dir>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <table  align="center">
+                        <tr>
+                            <td>
+                                {% load static %}
+                                <img src="{% static 'img/lineaverde.png' %}" >
+                            </td>
+                        </tr>
+                </table>
+            </tr>
+            <tr>
+                <td>
+                        <table>
+                            <tr>
+                                <td align="left">
+                                   <div style="margin: 5px 0px 0px 110px;font-size:12px"> Actividad principal</dir>
+                                </td>
+                                <td align="left">
+                                    <div style="margin: 5px 0px 0px 20px;font-size:12px;">Actividad secundaria</dir>
+                                </td>
+                                <td align="left">
+                                    <div style="margin: 5px 0px 0px 20px;font-size:12px;">Dirección</dir>
+                                </td>
+                                <td align="left">
+                                    <div style="margin: 5px 0px 0px 20px;font-size:12px;">CP</dir>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left">
+                                    <div style="margin: 0px 0px 5px 110px;font-size:12px">{{ profile_form.actividadPrincipal }} {{ profile_form.actividadPrincipal.errors }}</dir>
+                                </td >
+                                <td align="left">
+                                    <div style="margin: 0px 0px 5px 20px;font-size:12px;">{{ profile_form.actividadSecundaria }} {{ profile_form.actividadSecundaria.errors }}</dir>
+                                </td>
+                                <td align="left">
+                                    <div style="margin: 0px 0px 5px 20px;font-size:12px;">{{ profile_form.direccion }} {{ profile_form.direccion.errors }}</dir>
+                                </td>
+                                <td align="left">
+                                    <div style="margin: 0px 0px 5px 20px;font-size:12px;">{{ profile_form.cp }} {{ profile_form.cp.errors }}</dir>
+                                </td>
+                            </tr>
+                        </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td align="left">
+                                 <div style="margin: 5px 0px 0px 110px;font-size:12px">Provincia</dir>
+                            </td>
+                            <td align="left">
+                                 <div style="margin: 5px 0px 0px 20px;font-size:12px;">Localidad de explotación</dir>
+                            </td>
+                            <td align="left">
+                                 <div style="margin: 5px 0px 0px 20px;font-size:12px;">Comentarios adicionales sobre la empresa</dir>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left">
+                               <div style="margin: 0px 0px 5px 110px;font-size:12px">{{ profile_form.provincia }} {{ profile_form.provincia.errors }}</dir>
+                            </td >
+                            <td align="left">
+                               <div style="margin: 0px 0px 5px 20px;font-size:12px;">{{ profile_form.localidad }} {{ profile_form.localidad.errors }}</dir>
+                            </td>
+                            <td align="left">
+                                <div style="margin: 0px 0px 5px 20px;font-size:12px;">{{ profile_form.comentarios }} {{ profile_form.comentarios.errors }}</dir>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <table  align="center">
+                        <tr>
+                            <td>
+                                {% load static %}
+                                <img src="{% static 'img/lineaverde.png' %}" >
+                            </td>
+                        </tr>
+                </table>
+            </tr>
+            <tr>
+                <td>
+                        <table>
+                            <tr>
+                                <td align="left">
+                                     <div style="margin: 5px 0px 0px 110px;font-size:12px">Usuario responsable <br>(Nombre y Apellido)</dir>
+                                </td>
+                                <td align="left" valign="bottom">
+                                    <div style="margin: 5px 0px 0px 20px;font-size:12px;">Cargo</dir>
+                                </td>
+                                <td align="left" valign="bottom">
+                                    <div style="margin: 5px 0px 0px 20px;font-size:12px;">Email</dir>
+                                </td>
+                                <td align="left" valign="bottom"    >
+                                    <div style="margin: 5px 0px 0px 20px;font-size:12px;">Teléfono</dir>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left">
+                                    <div style="margin: 0px 0px 5px 110px;font-size:12px">{{ profile_form.nombre }} {{ profile_form.nombre.errors }}</dir>
+                                </td >
+                                <td align="left">
+                                    <div style="margin: 0px 0px 5px 20px;font-size:12px;">{{ profile_form.puesto }} {{ profile_form.puesto.errors }}</dir>
+                                </td>
+                                <td align="left">
+                                    <div style="margin: 0px 0px 5px 20px;font-size:12px;">{{ profile_form.email }} {{ profile_form.email.errors }}</dir>
+                                </td>
+                                <td align="left">
+                                    <div style="margin: 0px 0px 5px 20px;font-size:12px;">{{ profile_form.telefono }}{{ profile_form.telefono.errors }}</dir>
+                                </td>
+                            </tr>
+                        </table>
+                </td>
+            </tr>
+            <tr>
+                <table align="center">
+                        <tr>
+                            <td>
+                                {% load static %}
+                                <img src="{% static 'img/lineaazul.png' %}" >
+                            </td>
+                        </tr>
+                </table>
+            </tr>
+            <tr>
+                <td>
+                        <table>
+                            <tr>
+                                <td align="left">
+                                    <div style="margin: 5px 0px 0px 310px;font-size:12px"> Contraseña</dir>
+                                </td>
+                                <td align="left">
+                                    <div style="margin: 5px 0px 0px 20px;font-size:12px;">Confirmar contraseña</dir>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left">
+                                    <div style="margin: 0px 0px 5px 310px;font-size:12px">{{ user_form.password1 }} {{ user_form.password1.errors }}</dir>
+                                </td >
+                                <td align="left">
+                                    <div style="margin: 0px 0px 5px 20px;font-size:12px;">{{ user_form.password2 }} {{ user_form.password2.errors }}
+                                </td>
+                            </tr>
+                        </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table align="right">
+                            <tr>
+                                <td>
+                                            Leí y acepto los <a href="{% url 'usuarios:condiciones' %}">términos y condiciones de privacidad</a>
+
+                                                <input type="checkbox" id=100 name=terminos value=si  class="chkbox">
+
+                                </td>
+                                <td align="right">
+                                    <input type="button" value="GUARDAR" class="boton15" onclick="javascript:Guardar();" style="margin: 0px 110px 0px 70px;"">
+                                </td>
+                            </tr>
+                        </table>
+
+                </td>
+            </tr>
+        </table>
+
+
+
+</form>
+</div>
+{% endblock %}

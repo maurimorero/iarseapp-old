@@ -1,0 +1,389 @@
+body {
+    font-family:Arial,sans-serif;
+    font-weight: 500;
+    color:#333;
+    //background-image: url("../img/cereal1.jpg");
+    //background-image: url("../img/fondo.png");
+    background-image: url("../img/fondocreditos.jpg");
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed
+}
+h1 {
+    font-family:Arial,sans-serif;
+    font-size:20px;
+    font-weight: bold;
+}
+h2 {
+    font-family:Arial,sans-serif;
+    font-size:17px;
+    font-weight: bold;
+}
+h3 {
+    font-family:Arial,sans-serif;
+    font-size:16px;
+    font-weight: bold;
+}
+h4 {
+    font-family:Arial,sans-serif;
+    font-size:15px;
+    font-weight: bold;
+}
+input[type="text"] {
+    font-family:Arial,sans-serif;
+    color:#333;
+}
+pre {
+    font-family:Arial,sans-serif;
+    font-weight: 500;
+    color:#333;
+}
+#boxPwd
+{
+    width: 400px;
+    margin: 60px auto;
+    text-align: left;
+    padding: 20px;
+    background-color: #FFFFFF;
+    font-size:13px;
+    border: 1px solid #FFFFFF;
+    opacity: 0.85;
+}
+#boxFull
+{
+    width: auto;
+    margin: 0px 0px;
+    margin-top:400px;
+    text-align: left;
+    padding: 25px;
+    background-color: #FFFFFF;
+    font-size:13px;
+    border: 1px solid #FFFFFF;
+    opacity: 0.75;
+}
+#boxFull1
+{
+    width: auto;
+    margin: 0px 0px;
+    margin-top:200px;
+    text-align: left;
+    padding: 25px;
+    background-color: #FFFFFF;
+    font-size:13px;
+    border: 1px solid #FFFFFF;
+    opacity: 0.75;
+}
+#boxRegistro
+{
+    width: 700px;
+    margin: 50px auto;
+    text-align: left;
+    padding: 20px;
+    background-color: #FFFFFF;
+    font-size:13px;
+    border: 1px solid #FFFFFF;
+    opacity: 0.85;
+}
+#boxEncuestaIndex
+{
+    width: 700px;
+    margin: 50px auto;
+    text-align: left;
+    padding: 20px;
+    background-color: #FFFFFF;
+    font-size:13px;
+    border: 1px solid #FFFFFF;
+    opacity: 0.85;
+}
+#boxResultados
+{
+    width: 800px;
+    margin: 50px auto;
+    text-align: left;
+    padding: 20px;
+    background-color: #FFFFFF;
+    font-size:13px;
+    border: 1px solid #FFFFFF;
+    opacity: 0.85;
+}
+#boxSimulador
+{
+    width: 1150px;
+    margin: 50px auto;
+    text-align: left;
+    padding: 20px;
+    background-color: #FFFFFF;
+    font-size:13px;
+    border: 1px solid #FFFFFF;
+    opacity: 0.85;
+}
+#boxResultados1
+{
+    width: 1100px;
+    margin: 50px auto;
+    text-align: left;
+    padding: 20px;
+    background-color: #FFFFFF;
+    font-size:13px;
+    border: 1px solid #FFFFFF;
+    opacity: 0.85;
+}
+#boxResultados2
+{
+    width: 1100px;
+    margin: 50px auto;
+    text-align: left;
+    padding: 20px;
+    background-color: #FFFFFF;
+    font-size:13px;
+    border: 1px solid #FFFFFF;
+    opacity: 0.85;
+}
+#boxAzul
+{
+    width: 1100px;
+    margin: auto auto;
+    text-align: left;
+    //padding: 20px;
+    background-color: #04b2a0;
+    font-size:13px;
+    border: 1px solid #04b2a0;
+    opacity: 1;
+    color: #FFFFFF;
+    text-align: center;
+}
+#boxAzul1
+{
+    width: 800px;
+    margin: auto auto;
+    text-align: left;
+    //padding: 20px;
+    background-color: #04b2a0;
+    font-size:13px;
+    border: 1px solid #04b2a0;
+    opacity: 1;
+    color: #FFFFFF;
+    text-align: center;
+}
+#boxHome
+{
+    width: 850px;
+    margin: 50px auto;
+    text-align: left;
+    padding: 20px;
+    background-color: #FFFFFF;
+    font-size:13px;
+    border: 1px solid #FFFFFF;
+    opacity: 0.85;
+}
+#loginUsuario
+{
+    width: 50px;
+}
+#boxLogin
+{
+    width: 320px;
+    margin: 0px auto;
+    text-align: left;
+    padding: 20px;
+    background-color: #FFFFFF;
+    font-size:13px;
+    border: 1px solid #FFFFFF;
+    opacity: 0.75;
+}
+#boxCote
+{
+    width: 280px;
+    margin: 50px 20px;
+    text-align: left;
+    padding: 20px;
+    background-color: #FFFFFF;
+    font-size:13px;
+    border: 1px solid #FFFFFF;
+    opacity: 0.90;
+}
+#boxLanding
+{
+    width: 900px;
+    margin: 10px auto;
+    text-align: center;
+    padding: 5px;
+    background-color: #FFFFFF;
+    font-size:13px;
+    border: 1px solid #FFFFFF;
+    opacity: 0.85;
+}
+.boton{
+    //background:#04b2a0;
+    font-size:16px;
+    font-weight: bold;
+    border:0px;
+    height:19px;
+}
+//MENU nav {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    font-family: Arial,sans-serif;
+}
+ul.fullnav, ul.fullnav ul {
+    list-style: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 0;
+    text-align:
+    center;
+}
+ul.fullnav {
+    //border-top: 4px double #666;
+    //border-bottom: 4px solid #999;
+    background: #04b2a0;
+    opacity: 0.85;
+}
+ul.fullnav li {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    line-height: 60px;
+}
+ul.fullnav li a {
+    display: block;
+    padding: 0 10px;
+    text-decoration: none;
+    //text-transform: uppercase;
+    color: #FFFFFF;
+}
+ul.fullnav li ul {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    background: #8cc43d;
+    line-height: 0;
+    z-index: 3;
+}
+ul.fullnav ul a {
+    color: white;
+}
+ul.fullnav li:hover a {
+    background: #8cc43d;
+}
+ul.fullnav li:hover ul {
+    height: auto;
+}
+ul.fullnav li:hover ul li a {
+    background: transparent;
+}
+ul.fullnav li:hover ul li a:hover {
+    text-decoration: none;
+    color: #333;
+}
+//TABLAS .datagrid table { border-collapse: collapse; text-align: left; width: 100%; } .datagrid {font: normal 12px/150% Arial, Helvetica, sans-serif; 
+background: #fff; overflow: hidden; border: 1px solid #36752D; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }.datagrid table td, 
+.datagrid table th { padding: 3px 10px; }.datagrid table thead th {background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #67A32A), 
+color-stop(1, #275420) );background:-moz-linear-gradient( center top, #67A32A 5%, #275420 100% 
+);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#67A32A', endColorstr='#275420');background-color:#67A32A; color:#FFFFFF; font-size: 15px; 
+font-weight: bold; border-left: 1px solid #36752D; } .datagrid table thead th:first-child { border: none; }.datagrid table tbody td { color: #275420; 
+border-left: 1px solid #C6FFC2;font-size: 12px;font-weight: normal; }.datagrid table tbody .alt td { background: #DFFFDE; color: #275420; }.datagrid table tbody 
+td:first-child { border-left: none; }.datagrid table tbody tr:last-child td { border-bottom: none; }.datagrid table tfoot td div { border-top: 1px solid 
+#36752D;background: #DFFFDE;} .datagrid table tfoot td { padding: 0; font-size: 12px } .datagrid table tfoot td div{ padding: 2px; }.datagrid table tfoot td ul 
+{ margin: 0; padding:0; list-style: none; text-align: right; }.datagrid table tfoot li { display: inline; }.datagrid table tfoot li a { text-decoration: none; 
+display: inline-block; padding: 2px 8px; margin: 1px;color: #FFFFFF;border: 1px solid #36752D;-webkit-border-radius: 3px; -moz-border-radius: 3px; 
+border-radius: 3px; background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #36752D), color-stop(1, #275420) 
+);background:-moz-linear-gradient( center top, #36752D 5%, #275420 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#36752D', 
+endColorstr='#275420');background-color:#36752D; }.datagrid table tfoot ul.active, .datagrid table tfoot ul a:hover { text-decoration: none;border-color: 
+#275420; color: #FFFFFF; background: none; background-color:#36752D;}div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; } txtLargo{
+        word-wrap: break-word; /* All browsers since IE 5.5+ */
+        overflow-wrap: break-word; /* Renamed property in CSS3 draft spec */
+        width: 100%;
+    }
+#logobolsalogin
+{
+    position: absolute;
+    top: 450px;
+    left: 850px;
+    image: url("../img/logobolsa.png");
+}
+#footerDatos
+{
+    font-size:10px;
+}
+#indicagro
+{
+    width: 360px;
+    margin: 0px auto;
+    text-align: left;
+    //padding: 20px;
+    //opacity: 0.75;
+}
+#logocreditos
+{
+    position: absolute;
+    image: url("../img/solologo.png");
+}
+.boton1{
+    background:#8cc43d;
+    font-size:16px;
+    font-weight: bold;
+    border:0px;
+    height:50px;
+    width: 120px;
+    color: #FFFFFF;
+}
+.boton2{
+    background:#8cc43d;
+    font-size:16px;
+    font-weight: bold;
+    border:0px;
+    height:50px;
+    //width: auto;
+    padding: 10px 40% 10px 40%;
+    color: #FFFFFF;
+}
+.boton3{
+    background:#04b2a0;
+    font-size:16px;
+    font-weight: bold;
+    border:0px;
+    height:50px;
+    width: 120px;
+    color: #FFFFFF;
+}
+.boton4{
+    background:#8cc43d;
+    font-size:16px;
+    font-weight: bold;
+    border:0px;
+    height:50px;
+    //width: auto;
+    padding: 10px 15px 10px 15px;
+    color: #FFFFFF;
+}
+.botonLanding{
+    background:#8cc43d;
+    font-size:16px;
+    font-weight: bold;
+    border:0px;
+    height:50px;
+    margin: 0px 0px 0px 0px;
+    color: #FFFFFF;
+}
+#logos
+{
+    position: absolute;
+    margin: 20px 0px 50px 50px;
+    padding: 0px;
+    opacity: 0.75;
+}
+#txtLand
+{
+    color: #04b2a0;
+}

@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+{% block body %}
+    <script type="text/javascript">
+        function miMet(url)
+        {
+            document.getElementById("response").submit();
+            window.location="../../../../.."+url;
+        }
+    </script>
+<table>
+    <tr>
+        <td valign="top">
+            <table>
+                <tr>
+                    <td>
+                        <div id="boxCote4">
+                            <div style="font-size:12px;margin: 40px 20px 30px 20px;">
+                            <table align="center">
+                                <tr>
+                                    <td>    Completado
+                                    </td>
+                                    <td>
+                                            {% load static %}
+                                            {% if imagen == 0 %}
+                                                <img src="{% static 'img/porcentaje/imagen0.png' %}" height="60" width="60">
+                                            {% endif %}
+                                            {% if imagen == 1 %}
+                                                <img src="{% static 'img/porcentaje/imagen1.png' %}" height="60" width="60">
+                                            {% endif %}
+                                            {% if imagen == 2 %}
+                                                <img src="{% static 'img/porcentaje/imagen2.png' %}" height="60" width="60">
+                                            {% endif %}
+                                            {% if imagen == 3 %}
+                                                <img src="{% static 'img/porcentaje/imagen3.png' %}" height="60" width="60">
+                                            {% endif %}
+                                            {% if imagen == 4 %}
+                                                <img src="{% static 'img/porcentaje/imagen4.png' %}" height="60" width="60">
+                                            {% endif %}
+                                            {% if imagen == 5 %}
+                                                <img src="{% static 'img/porcentaje/imagen5.png' %}" height="60" width="60">
+                                            {% endif %}
+                                            {% if imagen == 6 %}
+                                                <img src="{% static 'img/porcentaje/imagen6.png' %}" height="60" width="60">
+                                            {% endif %}
+                                            {% if imagen == 7 %}
+                                                <img src="{% static 'img/porcentaje/imagen7.png' %}" height="60" width="60">
+                                            {% endif %}
+                                            {% if imagen == 8 %}
+                                                <img src="{% static 'img/porcentaje/imagen8.png' %}" height="60" width="60">
+                                            {% endif %}
+                                            {% if imagen == 9 %}
+                                                <img src="{% static 'img/porcentaje/imagen9.png' %}" height="60" width="60">
+                                            {% endif %}
+                                            {% if imagen == 10 %}
+                                                <img src="{% static 'img/porcentaje/imagen10.png' %}" height="60" width="60">
+                                            {% endif %}
+                                </td>
+                            </tr>
+
+                    </table>
+                </div></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="boxCote5">
+                            <div style="font-size:15px;margin: 40px 20px 30px 20px;">
+                            Encuesta  <br> {{ encuesta }}
+                            <input type="button" value="Finalizar" class="boton4" onclick="window.location='{% url 'surveys:encuesta_terminar' responseMgr.id %}';" style="margin: 20px 0 0 0;">
+                        </div>
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+
+
+        </td>
+        <td>
+
+    <div id="boxIndexEncuesta1">
+                    <div style="font-size:18px;margin: 20px 0px 10px 30px;">Encuesta  {{ encuesta }}</div>
+    {% load static %}
+    <img src="{% static 'img/lineaazul.png' %}" width="95%" style="margin: 0px 0px 0px 15px;">
+
+    <div id="boxCarrousel">
+        <div class="slideshow-container">
+
+        {% load static %}
+              {% for dim in dimensiones %}
+                <div class="mySlides fade">
+                    <div class="numbertext">{{ forloop.counter }}</div>
+                        <div class="text">
+                            <div style="font-size:12px;"><div class="centrado">Dimensión {{ dim }}</div>
+                                <br><br><br><br><div class="centrado">Subtemas</div><br>
+                                <div class="centrado">
+                                {% for sub in subtemas %}
+                                    {% if sub.dimension.id == dim.id %}
+                                        {% if sub.completada == False %}
+                                            <a href="javascript:miMet('{% url 'surveys:survey_subtema' responseMgr.id sub.id %}');">{{ sub.name }}</a><br>
+                                        {% endif %}
+                                        {% if sub.completada == True %}
+                                            <a href="#"><img src="{% static 'img/tick5.png' %}" height="20" width="20">{{ sub.name }}   </a><br>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                {% endfor %}
+
+          <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+          <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        <br>
+
+        <div style="text-align:center">
+            {% for dim in dimensiones %}
+                <span class="dot" onclick="currentSlide({{ forloop.counter }})"></span>
+            {% endfor %}
+        </div>
+    </div>
+         <form method="post" id="response">
+                {% csrf_token %}
+                {{ responseMgrForm.as_p }}
+                <button type="submit" class="boton"></button>
+            </form>
+                <br><br>
+                <input type="button" value="Terminar para obtener informe de autodiagnóstico" class="boton4" onclick="window.location='{% url 'surveys:encuesta_terminar' responseMgr.id %}';" style="margin: 0px 20px 20px 310px;">
+                <br>
+            {% if errorMsg == 1 %}
+                <script>
+                    alert("Debe completar todos los temas para finalizar la encuesta");
+                </script>
+            {% endif %}
+            {% if responseMgr.id == 0 %}
+                <script>
+                    document.getElementById("response").submit();
+                </script>
+            {% endif %}
+</div>
+            </td>
+    </tr>
+</table>
+{% load static %}
+
+    <script type="text/javascript">
+        var slideIndex = {{ slide }};
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+          showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+          showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+          var i;
+          var slides = document.getElementsByClassName("mySlides");
+          var dots = document.getElementsByClassName("dot");
+          if (n > slides.length) {slideIndex = 1}
+          if (n < 1) {slideIndex = slides.length}
+          for (i = 0; i < slides.length; i++) {
+              slides[i].style.display = "none";
+          }
+          for (i = 0; i < dots.length; i++) {
+              dots[i].className = dots[i].className.replace(" active", "");
+          }
+          slides[slideIndex-1].style.display = "block";
+          dots[slideIndex-1].className += " active";
+        }
+    </script>
+{% endblock %}
+</body>

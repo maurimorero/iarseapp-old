@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block javascript %}
+<script type="text/javascript">
+
+  function checker(){
+  var array = document.getElementsByTagName("input");
+
+    if(document.getElementById('1').checked){
+        for(var ii = 0; ii < array.length; ii++)
+        {
+         if(array[ii].type == "checkbox")
+           {
+                if(array[ii].className == "chkempresa")
+                {
+                   array[ii].disabled = false;
+                }
+                if(array[ii].className == "chkprovincia")
+                {
+                    array[ii].checked = false;
+                    array[ii].disabled = true;
+                }
+                if(array[ii].className == "chkgrupo")
+                {
+                    array[ii].checked = false;
+                    array[ii].disabled = true;
+                }
+            }
+        }
+    }
+
+    if(document.getElementById('2').checked){
+        for(var ii = 0; ii < array.length; ii++)
+        {
+         if(array[ii].type == "checkbox")
+           {
+                if(array[ii].className == "chkprovincia")
+                {
+                   array[ii].disabled = false;
+                }
+                if(array[ii].className == "chkempresa")
+                {
+                    array[ii].checked = false;
+                    array[ii].disabled = true;
+                }
+                if(array[ii].className == "chkgrupo")
+                {
+                    array[ii].checked = false;
+                    array[ii].disabled = true;
+                }
+            }
+        }
+    }
+
+    if(document.getElementById('3').checked){
+        for(var ii = 0; ii < array.length; ii++)
+        {
+         if(array[ii].type == "checkbox")
+           {
+                if(array[ii].className == "chkgrupo")
+                {
+                   array[ii].disabled = false;
+                }
+                if(array[ii].className == "chkempresa")
+                {
+                    array[ii].checked = false;
+                    array[ii].disabled = true;
+                }
+                if(array[ii].className == "chkprovincia")
+                {
+                    array[ii].checked = false;
+                    array[ii].disabled = true;
+                }
+            }
+        }
+    }
+  }
+
+</script>
+<script type="text/javascript">
+
+  function todos(){
+        var array = document.getElementsByTagName("input");
+        if(document.getElementById('22').checked)
+        {
+            for(var ii = 0; ii < array.length; ii++)
+            {
+                if(array[ii].className == "chkempresa")
+                {
+                    array[ii].checked = true;
+                }
+            }
+        }
+        if(document.getElementById('33').checked)
+        {
+            for(var ii = 0; ii < array.length; ii++)
+            {
+                if(array[ii].className == "chkprovincia")
+                {
+                    array[ii].checked = true;
+                }
+            }
+        }
+        if(document.getElementById('44').checked)
+        {
+            for(var ii = 0; ii < array.length; ii++)
+            {
+                if(array[ii].className == "chkgrupo")
+                {
+                    array[ii].checked = true;
+                }
+            }
+        }
+
+    }
+
+</script>
+
+{% endblock %}
+
+{% block body %}
+
+<div id="boxResultados2">
+    <div id="boxAzul"><h3>Seleccione los filtros para su consulta consolidada</h3></div>
+</div>
+<div id="boxResultados">
+<form method="post">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td VALIGN="TOP">Incluir</td>
+            <td VALIGN="TOP"><input type="radio" name="filtro" id="1" value="1" onclick="checker();"> Empresa<br></td>
+            <td VALIGN="TOP"><input type="radio" name="filtro" id="2" value="2" onclick="checker();"> Ubicación<br></td>
+            <td VALIGN="TOP"><input type="radio" name="filtro" id="3" value="3" onclick="checker();"> Grupo de empresa<br></td>
+
+        </tr>
+        <tr>
+            <td VALIGN="TOP">
+                <input type="radio" name="tipoencuesta" value=2  class="chkencuesta" checked="true"> Encuestas Nivel Básica<br>
+                <input type="radio" name="tipoencuesta" value=3  class="chkencuesta" > Encuestas Nivel Amplia<br>
+                <input type="radio" name="tipoencuesta" value=1  class="chkencuesta"> Encuestas Nivel Comprensiva<br>
+            </td>
+            <td VALIGN="TOP">
+                <input type="checkbox" id=22 name="todoEmp" value=22  class="chkempresa" onclick="todos();"> Seleccionar todas<br>
+                {% for empresa in empresas %}
+                    <input type="checkbox" name=e{{ empresa.id }} value={{ empresa.id }}  class="chkempresa"> {{ empresa.empresa }}<br>
+                {% endfor %}
+            </td>
+            <td VALIGN="TOP">
+                <input type="checkbox" id=33 name="todoProv" value=33  class="chkprovincia" onclick="todos();"> Seleccionar todas<br>
+                {% for provincia in provincias %}
+                    <input type="checkbox" name=p{{ provincia.id }} value={{ provincia.id }}  class="chkprovincia"> {{ provincia.name }}<br>
+                {% endfor %}
+            </td>
+            <td VALIGN="TOP">
+                <input type="checkbox" id=44 name="todoGrupo" value=44  class="chkgrupo" onclick="todos();"> Seleccionar todos<br>
+                {% for grupo in grupos %}
+                    <input type="checkbox" name=g{{ grupo.id }} value={{ grupo.id }}  class="chkgrupo"> {{ grupo.name }}<br>
+                {% endfor %}
+            </td>
+            <td VALIGN="TOP"><button type="submit" class="boton4">Consultar</button></td>
+    </table>
+</form>
+</div>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <script>
+        alert("{{ message }}");
+    </script>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<script>
+    var array = document.getElementsByTagName("input");
+        for(var ii = 0; ii < array.length; ii++)
+        {
+            if((array[ii].type == "checkbox")&&(array[ii].name!="basica")&& (array[ii].name!="amplia")&& (array[ii].name!="comprensiva"))
+            {
+                array[ii].disabled = true;
+            }
+        }
+</script>
+{% endblock %}

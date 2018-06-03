@@ -1,0 +1,84 @@
+{% extends 'base/base.html' %}
+
+{% block head %}
+
+{% endblock %}
+{% block content %}
+    <script type="text/javascript">
+        function miMet(url)
+        {
+            document.getElementById("response").submit();
+            window.location="../../.."+url;
+        }
+    </script>
+    <h1>{{ encuesta }}</h1><br>
+
+    <form method="post" id="response">
+        {% csrf_token %}
+        {{ responseMgrForm.as_p }}
+        <button type="submit">Guardar</button>
+    </form>
+
+
+        {% if dim1 %}
+        <h2>{{ dim1 }}</h2><br>
+        {% for s in sub1 %}
+        <a href="javascript:miMet('{% url 'surveys:survey_subtema' responseMgr.id s.id %}');">{{ s }}</a><br>
+        <br>
+        {% endfor %}
+        {% endif %}
+
+        {% if dim2 %}
+        <h2>{{ dim2 }}</h2><br>
+        {% for s in sub2 %}
+        <a href="javascript:miMet('{% url 'surveys:survey_subtema' responseMgr.id s.id %}');">{{ s }}</a><br>
+        <br>
+        {% endfor %}
+        {% endif %}
+
+        {% if dim3 %}
+        <h2>{{ dim3 }}</h2><br>
+        {% for s in sub3 %}
+        <a href="javascript:miMet('{% url 'surveys:survey_subtema' responseMgr.id s.id %}');">{{ s }}</a><br>
+        <br>
+        {% endfor %}
+        {% endif %}
+
+        {% if dim4 %}
+        <h2>{{ dim4 }}</h2><br>
+        {% for s in sub4 %}
+        <a href="javascript:miMet('{% url 'surveys:survey_subtema' responseMgr.id s.id %}');">{{ s }}</a><br>
+        <br>
+        {% endfor %}
+        {% endif %}
+
+        {% if dim5 %}
+        <h2>{{ dim5 }}</h2><br>
+        {% for s in sub5 %}
+        <a href="javascript:miMet('{% url 'surveys:survey_subtema' responseMgr.id s.id %}');">{{ s }}</a><br>
+        <br>
+        {% endfor %}
+        {% endif %}
+
+        {% if dim6 %}
+        <h2>{{ dim6 }}</h2><br>
+        {% for s in sub6 %}
+        <a href="javascript:miMet('{% url 'surveys:survey_subtema' responseMgr.id s.id %}');">{{ s }}</a><br>
+        <br>
+        {% endfor %}
+        {% endif %}
+
+        {% if dim7 %}
+        <h2>{{ dim7 }}</h2><br>
+        {% for s in sub7 %}
+        <a href="javascript:miMet('{% url 'surveys:survey_subtema' responseMgr.id s.id %}');">{{ s }}</a><br>
+        <br>
+        {% endfor %}
+        {% endif %}
+        {% if responseMgr.id == 0 %}
+            <script>
+                document.getElementById("response").submit();
+            </script>
+        {% endif %}
+{% endblock %}
+</body>

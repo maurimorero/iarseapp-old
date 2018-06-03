@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<meta charset="utf-8">
+	<title>IARSEAPP</title>
+    <!-- Google fonts -->
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+		<!-- D3.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+		<script src="//d3plus.org/js/d3.js"></script>
+
+		<!-- load D3plus after D3js -->
+		<script src="//d3plus.org/js/d3plus.js"></script>
+
+
+
+		<style>
+
+			.legend {
+				font-family: 'Raleway', sans-serif;
+				fill: #333333;
+			}
+
+			.tooltip {
+				fill: #333333;
+			}
+
+			.chart {
+
+			}
+
+			      .axis path, .axis line
+        {
+            fill: none;
+            stroke: #777;
+            shape-rendering: crispEdges;
+        }
+
+        .axis text
+        {
+            font-family: 'Arial';
+            font-size: 13px;
+        }
+        .tick
+        {
+            stroke-dasharray: 1, 2;
+        }
+        .bar
+        {
+            fill: FireBrick;
+        }
+
+
+
+		</style>
+
+  </head>
+
+  <body>
+<table>
+  <tr>
+    <td>
+      <td>
+        <td>
+             <td VALIGN=TOP>
+				 <h3>Nota de Desempeño por Dimensiones</h3>
+
+                            <div class="radarChart"></div>
+        {% load static %}
+		<script src="{% static 'js/radarChart.js' %}"></script>
+		<script>
+			//////////////////////////////////////////////////////////////
+			//////////////////////// Set-Up //////////////////////////////
+			//////////////////////////////////////////////////////////////
+
+			var margin = {top: 100, right: 100, bottom: 100, left: 100},
+				width = 500,
+				height = 250;
+
+			//////////////////////////////////////////////////////////////
+			////////////////////////// Data //////////////////////////////
+			//////////////////////////////////////////////////////////////
+
+			var data = [
+					  [//Dimensiones
+					    {% for nota in notas %}
+			                {% if nota.indicador.tipo.id == 2 %}
+			                    {axis:"{{ nota.indicador.name }}",value:{{ nota }} },
+                            {% endif %}
+                        {% endfor %}
+					  ]
+					];
+			//////////////////////////////////////////////////////////////
+			//////////////////// Draw the Chart //////////////////////////
+			//////////////////////////////////////////////////////////////
+
+			var color = d3.scale.ordinal()
+				.range(["#CC333F","#EDC951","#00A0B0"]);
+
+			var radarChartOptions = {
+			  w: width,
+			  h: height,
+			  margin: margin,
+			  maxValue: 10,
+			  levels: 5,
+			  roundStrokes: true,
+			  color: color
+			};
+			//Call function to draw the Radar chart
+			RadarChart(".radarChart", data, radarChartOptions);
+		</script>
+
+             </td>
+      </td>
+      <td>
+        <td>
+             <h3>Distribución por estadíos</h3>
+             <br><br><br><br><br>
+				 <svg id="visualisation" width="1000" height="500"></svg>
+							 <script>
+InitChart();
+
+function InitChart() {
+
+  var barData = [{
+    'x': 1,
+    'y': {{ estadio1 }}
+  }, {
+    'x': 2,
+    'y': {{ estadio2 }}
+  }, {
+    'x': 3,
+    'y': {{ estadio3 }}
+  }, {
+    'x': 4,
+    'y': {{ estadio4 }}
+  }];
+
+  var vis = d3.select('#visualisation'),
+    WIDTH = 400,
+    HEIGHT = 200,
+    MARGINS = {
+      top: 20,
+      right: 20,
+      bottom: 20,
+      left: 50
+    },
+    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
+      return d.x;
+    })),
+
+
+    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
+      d3.max(barData, function (d) {
+        return d.y;
+      })
+    ]),
+
+    xAxis = d3.svg.axis()
+      .scale(xRange)
+      .tickSize(5)
+      .tickSubdivide(true),
+
+    yAxis = d3.svg.axis()
+      .scale(yRange)
+      .tickSize(5)
+      .orient("left")
+      .tickSubdivide(true);
+
+
+  vis.append('svg:g')
+    .attr('class', 'x axis')
+    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+    .call(xAxis);
+
+  vis.append('svg:g')
+    .attr('class', 'y axis')
+    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+    .call(yAxis);
+
+  vis.selectAll('rect')
+    .data(barData)
+    .enter()
+    .append('rect')
+    .attr('x', function (d) {
+      return xRange(d.x);
+    })
+    .attr('y', function (d) {
+      return yRange(d.y);
+    })
+    .attr('width', xRange.rangeBand())
+    .attr('height', function (d) {
+      return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
+    })
+    .attr('fill', 'grey')
+    .on('mouseover',function(d){
+      d3.select(this)
+        .attr('fill','blue');
+    })
+    .on('mouseout',function(d){
+      d3.select(this)
+        .attr('fill','grey');
+    });
+
+}
+
+							</script>
+           </td>
+    </td>
+  </tr>
+</table>
+  </tr>
+    <tr>
+			<h3>Nota de Desempeño por Temas</h3>
+                <div class="radarChart1"></div>
+
+        {% load static %}
+		<script src="{% static 'js/radarChart.js' %}"></script>
+		<script>
+			//////////////////////////////////////////////////////////////
+			//////////////////////// Set-Up //////////////////////////////
+			//////////////////////////////////////////////////////////////
+
+			var margin = {top: 100, right: 100, bottom: 100, left: 100},
+				width = 800,
+				height = 400;
+
+			//////////////////////////////////////////////////////////////
+			////////////////////////// Data //////////////////////////////
+			//////////////////////////////////////////////////////////////
+
+			var data = [
+					  [//Subtemas
+					    {% for nota in notas %}
+			                {% if nota.indicador.tipo.id == 4 %}
+			                    {axis:"{{ nota.indicador.name }}",value:{{ nota }} },
+                            {% endif %}
+                        {% endfor %}
+					  ]
+					];
+			//////////////////////////////////////////////////////////////
+			//////////////////// Draw the Chart //////////////////////////
+			//////////////////////////////////////////////////////////////
+
+			var color = d3.scale.ordinal()
+				.range(["#00A0B0","#EDC951","#CC333F"]);
+
+			var radarChartOptions = {
+			  w: width,
+			  h: height,
+			  margin: margin,
+			  maxValue: 10,
+			  levels: 5,
+			  roundStrokes: true,
+			  color: color
+			};
+			//Call function to draw the Radar chart
+			RadarChart(".radarChart1", data, radarChartOptions);
+		</script>
+	</tr>
+</table>
+
+  </body>
+</html>
+

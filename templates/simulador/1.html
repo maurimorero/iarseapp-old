@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+{% load static %}
+<div id="boxSimulador2">
+
+<table>
+        <tr>
+						<table align="center">
+							<tr>
+								<td>
+									<div style="font-size: 18px;margin: 10px 0 0 0;">Simulador</div>
+								</td>
+							</tr>
+                		</table>
+        </tr>
+        <tr>
+                            <table align="center">
+                                <tr>
+                                    <td>
+                                        {% load static %}
+                                        <img src="{% static 'img/lineaazul.png' %}" >
+                                    </td>
+                                </tr>
+                            </table>
+                        </tr>
+        <tr>
+        <td>
+            {% load static %}
+	   		<a href="{% url 'usuarios:simulador2' %}" ><img src="{% static 'img/basica.png' %}" style="margin: 30px 0px 20px 20px;"></a>
+        </td>
+        <td>{% load static %}
+	   		<a href="{% url 'usuarios:simulador2' %}" ><img src="{% static 'img/amplia.png' %}" style="margin: 30px 0px 20px 20px;"></a>
+        </td>
+        <td>{% load static %}
+	   		<a href="{% url 'usuarios:simulador2' %}" ><img src="{% static 'img/comprensiva.png' %}" style="margin: 30px 0px 20px 20px;"></a>
+        </td>
+    </tr>
+</table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,336 @@
+{% extends 'base.html' %}
+{% block javascript %}
+{% load static %}
+  <script type="text/javascript" src="{% static 'js/fusioncharts/fusioncharts.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/fusioncharts/fusioncharts.charts.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/fusioncharts/fusioncharts.powercharts.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/fusioncharts/fusioncharts.zoomscatter.js' %}"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+  <script type="text/javascript">
+  FusionCharts.ready(function(){
+    var revenueChart = new FusionCharts({
+        "type": "radar",
+        "renderAt": "chartContainer",
+        "width": "700",
+        "height": "400",
+        "dataFormat": "json",
+        "dataSource":
+          	{
+		    "chart": {
+			"caption": "Dimensiones",
+			"subCaption": "",
+			"captionFontSize": "14",
+			"subcaptionFontSize": "14",
+			"numberPrefix": "",
+			"baseFontColor": "#333333",
+			"baseFont": "Helvetica Neue,Arial",
+			"subcaptionFontBold": "0",
+			"paletteColors": "#008ee4,#6baa01",
+			"bgColor": "#ffffff",
+			"radarfillcolor": "#ffffff",
+			"showBorder": "0",
+			"showShadow": "0",
+			"showCanvasBorder": "0",
+			"legendBorderAlpha": "0",
+			"legendShadow": "0",
+			"divLineAlpha": "10",
+			"usePlotGradientColor": "0",
+			"numberPreffix": ""
+		    },
+		    "categories": [
+			{
+			    "category": [
+			    {% for d in dimensiones %}
+			        {"label":" {{ d.name }} "},
+                {% endfor %}
+			    ]
+			}
+		    ],
+		    "dataset": [
+			{
+			    "seriesname": "{{ evaluacion.fecha }}",
+			    "data": [
+                    {% for nota in notasDim %}
+			            {"value":" {{ nota }} "},
+                    {% endfor %}
+			    ]
+			}
+		    ,
+		    {
+			    "seriesname": "{{ evaluacion1.fecha }}",
+			    "data": [
+                    {% for nota in notasDim1 %}
+			            {"value":" {{ nota }} "},
+                    {% endfor %}
+			    ]
+			}
+		    ]
+		}
+
+  });
+revenueChart.render();
+})
+</script>
+<script type="text/javascript">
+  FusionCharts.ready(function(){
+    var revenueChart1 = new FusionCharts({
+        "type": "radar",
+        "renderAt": "chartContainer1",
+        "width": "1000",
+        "height": "500",
+        "dataFormat": "json",
+        "dataSource":
+          	{
+		    "chart": {
+			"caption": "Subtemas",
+			"subCaption": "",
+			"captionFontSize": "14",
+			"subcaptionFontSize": "14",
+			"numberPrefix": "",
+			"baseFontColor": "#333333",
+			"baseFont": "Helvetica Neue,Arial",
+			"subcaptionFontBold": "0",
+			"paletteColors": "#008ee4,#6baa01",
+			"bgColor": "#ffffff",
+			"radarfillcolor": "#ffffff",
+			"showBorder": "0",
+			"showShadow": "0",
+			"showCanvasBorder": "0",
+			"legendBorderAlpha": "0",
+			"legendShadow": "0",
+			"divLineAlpha": "10",
+			"usePlotGradientColor": "0",
+			"numberPreffix": ""
+		    },
+		    "categories": [
+			{
+			    "category": [
+			    {% for d in temas %}
+			        {"label":" {{ d.name }} "},
+                {% endfor %}
+			    ]
+			}
+		    ],
+		    "dataset": [
+			{
+			    "seriesname": "{{ evaluacion.fecha }}",
+			    "data": [
+                    {% for nota in notasTem %}
+			            {"value":" {{ nota }} "},
+                    {% endfor %}
+			    ]
+			}
+		    ,
+		    {
+			    "seriesname": "{{ evaluacion1.fecha }}",
+			    "data": [
+                    {% for nota in notasTem1 %}
+			            {"value":" {{ nota }} "},
+                    {% endfor %}
+			    ]
+			}
+		    ]
+		}
+
+  });
+revenueChart1.render();
+})
+</script>
+<script type="text/javascript">
+    FusionCharts.ready(function() {
+   var myChart = new FusionCharts({
+     type: 'zoomscatter',
+     renderAt: 'chartContainer2',
+     width: '400',
+     height: '250',
+     dataFormat: 'json',
+     dataSource: {
+       "chart": {
+         "caption": "Distribución por estadíos",
+         "baseFont": "Helvetica Neue,Arial",
+         "captionFontSize": "14",
+         "xAxisName": "Estadíos",
+         "yAxisName": "Cantidad de indicadores",
+         "xaxisminvalue": "0",
+         "showBorder": "0",
+         "showAlternateHGridColor": "1",
+         "showAlternateVGridColor": "1",
+         "paletteColors": "7EFFAB,FFEE02,FF646F",
+         "bgcolor": "#ffffff",
+         "canvasBgColor": "#ffffff",
+         "legendBorderAlpha": "0",
+         "legendshadow": "0",
+         "showAxisLines": "1",
+         "yAxisNameFontBold": "0",
+         "xAxisNameFontBold": "0",
+         "plotTooltext": "Estadío $xvalue  <br> Cant Indicadores - $yvalue"
+       },
+       "dataset": [{
+         "seriesname": "{{ evaluacion.fecha }}",
+         "showregressionline": "0",
+         "anchorradius": "5",
+         "anchorbgcolor": "7EFFAB",
+         "anchorBorderThickness": "3",
+         "anchorBorderColor": "7EFFAB",
+         "data": [{
+           "x": "1",
+           "y": "{{ estadio1 }}"
+         },{
+           "x": "2",
+           "y": "{{ estadio2 }}"
+         },{
+           "x": "3",
+           "y": "{{ estadio3 }}"
+         },{
+           "x": "4",
+           "y": "{{ estadio4 }}"
+         }
+         ]
+       }, {
+         "seriesname": "{{ evaluacion1.fecha }}",
+         "showregressionline": "0",
+         "anchorradius": "5",
+         "anchorbgcolor": "FFEE02",
+         "anchorBorderThickness": "3",
+         "anchorBorderColor": "FFEE02",
+         "data": [{
+           "x": "1",
+           "y": "{{ estadio11 }}"
+
+         },{
+           "x": "2",
+           "y": "{{ estadio21 }}"
+         },{
+           "x": "3",
+           "y": "{{ estadio31 }}"
+         },{
+           "x": "4",
+           "y": "{{ estadio41 }}"
+         }]
+       }]
+     }
+   });
+   myChart.render();
+ });
+</script>
+
+{% endblock %}
+
+{% block body %}
+
+
+<table>
+        <tr> <td VALIGN=TOP>
+                <div id="chartContainer1"></div>
+            </td>
+        </tr>
+         <tr>
+             <td VALIGN=TOP>
+                 <table>
+                     <tr>
+                         <td>
+                            <div id="chartContainer"></div>
+                        </td>
+                         <td>
+                             <div id="chartContainer2"></div>
+                         </td>
+                  </table>
+             </td>
+        </tr>
+</table>
+<h3>Auto evaluacion del {{ evaluacion.fecha }}</h3>
+    {% for nota in notas %}
+        {% if nota.indicador.tipo.id == 3 %}
+            <h3>{{ nota.indicador.name }}: {{ nota.nota }}</h3>
+        {% endif %}
+    {% endfor %}
+<table>
+    <tr>
+        <td VALIGN=TOP>
+            <h3>Indicadores</h3>
+                {% for nota in notas %}
+                    {% if nota.indicador.tipo.id == 1 %}
+                        <pre> {{ nota.indicador.name }}: {{ nota.nota }}</pre>
+                    {% endif %}
+                {% endfor %}
+        </td>
+        <td VALIGN=TOP>
+            <table>
+                <tr><td VALIGN=TOP>
+                    <h3>Dimensiones</h3>
+                        {% for nota in notas %}
+                            {% if nota.indicador.tipo.id == 2 %}
+                                <pre> {{ nota.indicador.name }}: {{ nota.nota }}</pre>
+                            {% endif %}
+                        {% endfor %}
+                </td></tr>
+                <tr><td VALIGN=TOP>
+                    <h3>Temas</h3>
+                        {% for nota in notas %}
+                            {% if nota.indicador.tipo.id == 4 %}
+                                <pre> {{ nota.indicador.name }}: {{ nota.nota }}</pre>
+                            {% endif %}
+                        {% endfor %}
+                </td></tr>
+                <tr><td VALIGN=TOP>
+                        <h3>Distribución por estadíos</h3>
+                        {% for nota in notas %}
+                            {% if nota.indicador.tipo.id == 5 %}
+                                <pre> {{ nota.indicador.name }}: {{ nota.nota }}</pre>
+                            {% endif %}
+                        {% endfor %}
+                </td></tr>
+            </table>
+        </td>
+	</tr>
+</table>
+
+<h3>Auto evaluacion del {{ evaluacion1.fecha }}</h3>
+    {% for nota in notas1 %}
+        {% if nota.indicador.tipo.id == 3 %}
+            <h3>{{ nota.indicador.name }}: {{ nota.nota }}</h3>
+        {% endif %}
+    {% endfor %}
+<table>
+    <tr>
+        <td VALIGN=TOP>
+            <h3>Indicadores</h3>
+                {% for nota in notas1 %}
+                    {% if nota.indicador.tipo.id == 1 %}
+                        <pre> {{ nota.indicador.name }}: {{ nota.nota }}</pre>
+                    {% endif %}
+                {% endfor %}
+        </td>
+        <td VALIGN=TOP>
+            <table>
+                <tr><td VALIGN=TOP>
+                    <h3>Dimensiones</h3>
+                        {% for nota in notas1 %}
+                            {% if nota.indicador.tipo.id == 2 %}
+                                <pre> {{ nota.indicador.name }}: {{ nota.nota }}</pre>
+                            {% endif %}
+                        {% endfor %}
+                </td></tr>
+                <tr><td VALIGN=TOP>
+                    <h3>Temas</h3>
+                        {% for nota in notas1 %}
+                            {% if nota.indicador.tipo.id == 4 %}
+                                <pre> {{ nota.indicador.name }}: {{ nota.nota }}</pre>
+                            {% endif %}
+                        {% endfor %}
+                </td></tr>
+                <tr><td VALIGN=TOP>
+                        <h3>Distribución por estadíos</h3>
+                        {% for nota in notas1 %}
+                            {% if nota.indicador.tipo.id == 5 %}
+                                <pre> {{ nota.indicador.name }}: {{ nota.nota }}</pre>
+                            {% endif %}
+                        {% endfor %}
+                </td></tr>
+            </table>
+        </td>
+	</tr>
+</table>
+
+
+{% endblock %}

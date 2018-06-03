@@ -1,0 +1,284 @@
+{% extends 'base.html' %}
+{% load survey_extras %}
+
+{% block body %}
+<script type="text/javascript" >
+
+function activarTab(unTab) {
+    try {
+        //Los elementos div de todas las pestañas están todos juntos en una
+        //única celda de la segunda fila de la tabla de estructura de pestañas.
+        //Hemos de buscar la seleccionada, ponerle display block y al resto
+        //ponerle display none.
+        var id = unTab.id;
+        //alert(id);
+        if (id){
+            var tr = unTab.parentNode || unTab.parentElement;
+            var tbody = tr.parentNode || tr.parentElement;
+            var table = tbody.parentNode || tbody.parentElement;
+            //Pestañas en varias filas
+            if (table.getAttribute("data-filas")!=null){
+                var filas = tbody.getElementsByTagName("tr");
+                var filaDiv = filas[filas.length-1];
+                tbody.insertBefore(tr, filaDiv);
+            }
+            //Para compatibilizar con la versión anterior, si la tabla no tiene los
+            //atributos data-min y data-max le ponemos los valores que tenían antes del
+            //cambio de versión.
+            var desde = table.getAttribute("data-min");
+            if (desde==null) desde = 0;
+            var hasta = table.getAttribute("data-max");
+            if (hasta==null) hasta = MAXTABS;
+            var idTab = id.split("tabck-");
+            var numTab = parseInt(idTab[1]);
+            //Las "tabdiv" son los bloques interiores mientras que los "tabck"
+            //son las pestañas.
+            var esteTabDiv = document.getElementById("tabdiv-" + numTab);
+            for (var i=desde; i<=hasta; i++) {
+                var tabdiv = document.getElementById("tabdiv-" + i);
+                if (tabdiv) {
+                    var tabck = document.getElementById("tabck-" + i);
+                    if (tabdiv.id == esteTabDiv.id) {
+                        tabdiv.style.display = "block";
+                        tabck.style.color = "black";
+                        tabck.style.backgroundColor = "#BCE9BC";
+                        tabck.style.borderBottomColor = "#BCE9BC";
+                    } else {
+                        tabdiv.style.display = "none";
+                        tabck.style.color = "white";
+                        tabck.style.backgroundColor = "#00B1A2";
+                        tabck.style.borderBottomColor = "#00B1A2";
+                    }
+                }
+            }
+        }
+    } catch (e) {
+        alert("Error al activar una pestaña. " + e.message);
+    }
+}
+
+</script>
+	<table>
+		<tr>
+			<td valign="top">
+
+
+					<table >
+						<tr>
+							<td><div id="boxCote6">
+								<div style="font-size:12px;margin: 40px 20px 30px 20px;">
+								<table>
+									<tr>
+
+							<td>
+								Completado
+										</td>
+										<td>
+												{% load static %}
+												{% if imagen == 0 %}
+													<img src="{% static 'img/porcentaje/imagen0.png' %}" height="60" width="60">
+												{% endif %}
+												{% if imagen == 1 %}
+													<img src="{% static 'img/porcentaje/imagen1.png' %}" height="60" width="60">
+												{% endif %}
+												{% if imagen == 2 %}
+													<img src="{% static 'img/porcentaje/imagen2.png' %}" height="60" width="60">
+												{% endif %}
+												{% if imagen == 3 %}
+													<img src="{% static 'img/porcentaje/imagen3.png' %}" height="60" width="60">
+												{% endif %}
+												{% if imagen == 4 %}
+													<img src="{% static 'img/porcentaje/imagen4.png' %}" height="60" width="60">
+												{% endif %}
+												{% if imagen == 5 %}
+													<img src="{% static 'img/porcentaje/imagen5.png' %}" height="60" width="60">
+												{% endif %}
+												{% if imagen == 6 %}
+													<img src="{% static 'img/porcentaje/imagen6.png' %}" height="60" width="60">
+												{% endif %}
+												{% if imagen == 7 %}
+													<img src="{% static 'img/porcentaje/imagen7.png' %}" height="60" width="60">
+												{% endif %}
+												{% if imagen == 8 %}
+													<img src="{% static 'img/porcentaje/imagen8.png' %}" height="60" width="60">
+												{% endif %}
+												{% if imagen == 9 %}
+													<img src="{% static 'img/porcentaje/imagen9.png' %}" height="60" width="60">
+												{% endif %}
+												{% if imagen == 10 %}
+													<img src="{% static 'img/porcentaje/imagen10.png' %}" height="60" width="60">
+												{% endif %}
+
+
+										</td>
+
+						</tr>
+
+								</table>
+							</div>
+						</div>
+							</td>
+						</tr>
+
+
+						<tr>
+							<td>
+								<div id="boxCote7">
+									<div style="font-size:15px;margin: 40px 20px 30px 20px;">
+									Encuesta: {{ encuesta.name }}</div>
+									<div style="font-size:12px;margin: 40px 20px 30px 20px;">
+										Dimensión<br>{{ survey.dimension.name }}<br><br>
+										Subtemas 
+									{% for subtema in subtemasDimension %}
+										 <br><div class="link">{{ subtema.name }}</div>
+									{% endfor %}
+									</div>
+								</div>
+							</td>
+						</tr>
+					</table>
+
+
+
+			</td>
+			<td>
+				<div id="boxEncuestaIndex1">
+				<div style="font-size:18px">Subtema {{survey.name|title}}</div>
+				{% load static %}
+				<img src="{% static 'img/lineaazul.png' %}" width="95%">
+				<p>NOTA</p>
+				<p>- Debe responder las preguntas de cada indicador para que se guarden</p>
+				<p>- Una vez completado el subtema, no se puede volver a editar</p>
+				<p>- Si el indicador no aplica, por favor marque las respuestas binarias indistintamente. El sistema eliminará el indicador en cuestión para el cálculo final</p>
+				<div class="survey-description">
+					{{survey.description|safe}}
+
+				</div>
+
+			<div>
+				<form action="{% url 'surveys:survey_detail' id_resp_mgr survey.id %}" method="post">{% csrf_token %}
+
+					<!--<h3 class="collapsible" id="response_metadata">Encuesta del IARSE<span></span></h3>-->
+					<div class="category-container">
+
+					<div class="field-wrapper">
+						{{ response_form.conditions.errors }}
+						{{ response_form.conditions.label_tag }}
+						<span class="form-help-text">{{ response_form.conditions.help_text}}</span>
+						<div class="form-field-body">
+							{{ response_form.conditions }}
+						</div>
+					</div>
+
+					<div class="field-wrapper">
+						{{ response_form.comments.errors }}
+						{{ response_form.comments.label_tag }}
+						<span class="form-help-text">{{ response_form.comments.help_text}}</span>
+						<div class="form-field-body">
+							{{ response_form.comments }}
+						</div>
+					</div>
+				</div>
+
+					<ol class="survey-questions">
+					{% for field in response_form %}
+							{% if field.field.widget.attrs.category == None %}
+								<li class="q-item" value="{% counter %}">
+								{% if field.field.required %}
+								<div class="field-wrapper question-required">
+									{{ field.errors }}
+									<span class="asterix"> * </span><label class="label-inline">{{ field.label }}</label>
+								{% else %}
+								<div class="field-wrapper">
+									{{ field.errors }}
+									<label class="label-inline">{{ field.label }}</label>
+								{% endif %}
+									<span class="form-help-text">{{ field.help_text}}</span>
+									<div class="form-field-body">
+										<br><br>{{ field }}
+									</div>
+								</div>
+								</li>
+							{% endif %}
+						{% endfor %}
+					<table class="tabs" data-min="0" data-max="12">
+					<tr>
+						{% for category in categories %}
+
+							<th class="tabck" id="tabck-{{ forloop.counter0 }}" onclick="activarTab(this)"><h5 class="collapsible">Indicador N°{{category.orden}}</h5></th>
+						{% endfor %}
+					</tr>
+					<tr class="filadiv">
+						<td colspan="6" id="tab-0">
+							{% for category in categories %}
+								<div class="tabdiv" id="tabdiv-{{ forloop.counter0 }}">
+									<h3 class="collapsible">Indicador {{category.name}}<span></span></h3>
+									<div class="category-container">
+									{% for field in response_form %}
+										{% if field.field.widget.attrs.category == category %}
+
+											{% if field.field.required %}
+											<div class="field-wrapper question-required">
+												{{ field.errors }}
+												<br><span class="asterix"> <!-- Aca va el * de requerida --> </span><label class="label-inline">{{ field.label }}</label>
+											{% else %}
+											<div class="field-wrapper">
+												{{ field.errors }}
+												<label class="label-inline">{{ field.label }}</label>
+											{% endif %}
+												<span class="form-help-text">{{ field.help_text}}</span>
+												<div class="form-field-body">
+													{{ field }}
+												</div>
+											</div>
+
+										{% endif %}
+									{% endfor %}
+									</div>
+								</div>
+							{% endfor %}
+
+					</ol>
+					</td>
+					</tr>
+					</table>
+					<div class="submit-button" style="margin: 20px 0 0 0;"><input type="submit" value="Continuar" class="boton4"></div>
+
+			</div>
+
+
+
+
+			</form>
+
+		</div>
+		</div>
+
+			</td>
+		</tr>
+	</table>
+
+{% endblock %}
+
+{% block extrajs %}
+{% load static %}
+	<script src="{% static '/media/js/jquery.collapsible.js' %}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			//collapsible management
+			$('.collapsible').collapsible({defaultOpen: 'response_metadata'});
+		});
+	</script>
+	<script type="text/javascript" >
+			var radios = document.getElementsByTagName('input');
+
+			 for (i=0; i<document.getElementsByTagName('input').length; i++)  {
+				if (document.getElementsByTagName('input')[i].type == 'radio')
+				  radios[i].checked = true;
+			  }
+	</script>
+	<script type="text/javascript" >
+			primerTab = document.getElementById('tabck-0');
+			activarTab(primerTab);
+	</script>
+{% endblock %}

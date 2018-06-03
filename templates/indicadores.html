@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div id="boxRegistro">
+<h3>Encuesta {{ encuesta.name }}</h3>
+</div>
+
+<div id="boxResultados">
+
+    <table>
+        {% for ind in indicadores %}
+        <tr>
+            <td>{{ ind }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

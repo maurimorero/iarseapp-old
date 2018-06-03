@@ -1,0 +1,367 @@
+{% extends 'base.html' %}
+{% block javascript %}
+{% load static %}
+  <script type="text/javascript" src="{% static 'js/fusioncharts/fusioncharts.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/fusioncharts/fusioncharts.charts.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/fusioncharts/fusioncharts.powercharts.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/fusioncharts/fusioncharts.zoomscatter.js' %}"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+  <script type="text/javascript">
+  FusionCharts.ready(function(){
+    var revenueChart = new FusionCharts({
+        "type": "radar",
+        "renderAt": "chartContainer",
+        "width": "700",
+        "height": "400",
+        "dataFormat": "json",
+        "dataSource":
+          	{
+		    "chart": {
+			"caption": "Dimensiones",
+			"subCaption": "",
+			"captionFontSize": "14",
+			"subcaptionFontSize": "14",
+			"numberPrefix": "",
+			"baseFontColor": "#333333",
+			"baseFont": "Helvetica Neue,Arial",
+			"subcaptionFontBold": "0",
+			"paletteColors": "#008ee4,#6baa01",
+			"bgColor": "#ffffff",
+			"radarfillcolor": "#ffffff",
+			"showBorder": "0",
+			"showShadow": "0",
+			"showCanvasBorder": "0",
+			"legendBorderAlpha": "0",
+			"legendShadow": "0",
+			"divLineAlpha": "10",
+			"usePlotGradientColor": "0",
+			"numberPreffix": ""
+		    },
+		    "categories": [
+			{
+			    "category": [
+			    {% for nota in notas %}
+			        {% if nota.indicador.tipo.id == 2 %}
+			            {"label":" {{ nota.indicador.name }} "},
+                    {% endif %}
+                {% endfor %}
+			    ]
+			}
+		    ],
+		    "dataset": [
+			{
+			    "seriesname": "Notas",
+			    "data": [
+                    {% for nota in notas %}
+			            {% if nota.indicador.tipo.id == 2 %}
+			                {"value":" {{ nota.nota }} "},
+                        {% endif %}
+                    {% endfor %}
+			    ]
+			}
+		    ]
+		}
+
+  });
+revenueChart.render();
+})
+</script>
+<script type="text/javascript">
+  FusionCharts.ready(function(){
+    var revenueChart1 = new FusionCharts({
+        "type": "radar",
+        "renderAt": "chartContainer1",
+        "width": "1000",
+        "height": "500",
+        "dataFormat": "json",
+        "dataSource":
+          	{
+		    "chart": {
+			"caption": "Subtemas",
+			"subCaption": "",
+			"captionFontSize": "14",
+			"subcaptionFontSize": "14",
+			"numberPrefix": "",
+			"baseFontColor": "#333333",
+			"baseFont": "Helvetica Neue,Arial",
+			"subcaptionFontBold": "0",
+			"paletteColors": "#008ee4,#6baa01",
+			"bgColor": "#ffffff",
+			"radarfillcolor": "#ffffff",
+			"showBorder": "0",
+			"showShadow": "0",
+			"showCanvasBorder": "0",
+			"legendBorderAlpha": "0",
+			"legendShadow": "0",
+			"divLineAlpha": "10",
+			"usePlotGradientColor": "0",
+			"numberPreffix": ""
+		    },
+		    "categories": [
+			{
+			    "category": [
+			    {% for nota in notas %}
+			        {% if nota.indicador.tipo.id == 4 %}
+			            {"label":" {{ nota.indicador.name }} "},
+                    {% endif %}
+                {% endfor %}
+			    ]
+			}
+		    ],
+		    "dataset": [
+			{
+			    "seriesname": "Notas",
+			    "data": [
+                    {% for nota in notas %}
+			            {% if nota.indicador.tipo.id == 4 %}
+			                {"value":" {{ nota.nota }} "},
+                        {% endif %}
+                    {% endfor %}
+			    ]
+			}
+		    ]
+		}
+
+  });
+revenueChart1.render();
+})
+</script>
+<script type="text/javascript">
+    FusionCharts.ready(function() {
+   var myChart = new FusionCharts({
+     type: 'zoomscatter',
+     renderAt: 'chartContainer2',
+     width: '400',
+     height: '250',
+     dataFormat: 'json',
+     dataSource: {
+       "chart": {
+         "caption": "Distribución por estadíos",
+         "baseFont": "Helvetica Neue,Arial",
+         "captionFontSize": "14",
+         "xAxisName": "Estadíos",
+         "yAxisName": "Cantidad de indicadores",
+         "xaxisminvalue": "0",
+         "showBorder": "0",
+         "showAlternateHGridColor": "1",
+         "showAlternateVGridColor": "1",
+         "paletteColors": "7EFFAB,FFEE02,FF646F",
+         "bgcolor": "#ffffff",
+         "canvasBgColor": "#ffffff",
+         "legendBorderAlpha": "0",
+         "legendshadow": "0",
+         "showAxisLines": "1",
+         "yAxisNameFontBold": "0",
+         "xAxisNameFontBold": "0",
+         "plotTooltext": "Estadío $xvalue  <br> Cant Indicadores - $yvalue"
+       },
+       "dataset": [{
+         "seriesname": "Estadio 1",
+         "showregressionline": "0",
+         "anchorradius": "5",
+         "anchorbgcolor": "7EFFAB",
+         "anchorBorderThickness": "3",
+         "anchorBorderColor": "7EFFAB",
+         "data": [{
+           "x": "1",
+           "y": "{{ estadio1 }}"
+         }]
+       }, {
+         "seriesname": "Estadio 2",
+         "showregressionline": "0",
+         "anchorradius": "5",
+         "anchorbgcolor": "FFEE02",
+         "anchorBorderThickness": "3",
+         "anchorBorderColor": "FFEE02",
+         "data": [{
+           "x": "2",
+           "y": "{{ estadio2 }}"
+         }]
+       }, {
+         "seriesname": "Estadio 3",
+         "showregressionline": "10",
+         "anchorradius": "5",
+         "anchorbgcolor": "#A4A4A4",
+         "anchorBorderThickness": "3",
+         "anchorBorderColor": "#A4A4A4",
+         "data": [{
+           "x": "3",
+           "y": "{{ estadio3 }}"
+         }]
+       }, {
+         "seriesname": "Estadio 4",
+         "showregressionline": "0",
+         "anchorradius": "5",
+         "anchorbgcolor": "FF646F",
+         "anchorBorderThickness": "3",
+         "anchorBorderColor": "FF646F",
+         "data": [{
+           "x": "4",
+           "y": "{{ estadio4 }}"
+         }]
+       }]
+     }
+   });
+   myChart.render();
+ });
+</script>
+
+<script type="text/javascript">
+        function CreaPDF(){
+            linea=30;
+            var pdf = new jsPDF();
+            pdf.setFontSize(20);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            //pdf.setTextColor(255, 0, 0);
+            pdf.text(10, linea, 'Indicadores');
+            {% for nota in notas %}
+                        {% if nota.indicador.tipo.id == 3 %}
+                            linea=linea+15;
+                            pdf.text(10, linea, '{{ nota.indicador.name }}: {{ nota.nota }}');
+                        {% endif %}
+            {% endfor %}
+            linea=linea+15;
+            pdf.text(10, linea, 'Dimensiones');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            {% for nota in notas %}
+                    {% if nota.indicador.tipo.id == 2 %}
+                        linea=linea+5;
+                         pdf.text(10, linea, '{{ nota.indicador.name }}: {{ nota.nota }}');
+                    {% endif %}
+             {% endfor %}
+
+            linea=linea+15;
+            pdf.setFontSize(20);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            pdf.text(10, linea, 'Temas');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            {% for nota in notas %}
+                    {% if nota.indicador.tipo.id == 4 %}
+                        linea=linea+5;
+                         pdf.text(10, linea, '{{ nota.indicador.name }}: {{ nota.nota }}');
+                    {% endif %}
+             {% endfor %}
+
+            linea=linea+15;
+            pdf.setFontSize(20);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            pdf.text(10, linea, 'Distribución por estadíos');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            {% for nota in notas %}
+                    {% if nota.indicador.tipo.id == 5 %}
+                        linea=linea+5;
+                         pdf.text(10, linea, '{{ nota.indicador.name }}: {{ nota.nota }}');
+                    {% endif %}
+             {% endfor %}
+            pdf.addPage();
+            linea=0;
+            linea=linea+15;
+            pdf.setFontSize(20);
+            pdf.setFont("times");
+            pdf.setFontType("bold");
+            pdf.text(10, linea, 'Indicadores');
+            pdf.setFontSize(10);
+            pdf.setFont("times");
+            pdf.setFontType("italic");
+            {% for nota in notas %}
+                    {% if nota.indicador.tipo.id == 1 %}
+                        linea=linea+5;
+                         pdf.text(10, linea, '{{ nota.indicador.name }}: {{ nota.nota }}');
+                    {% endif %}
+             {% endfor %}
+
+            pdf.save('Indicadores.pdf');
+        }
+</script>
+{% endblock %}
+
+{% block body %}
+
+    <a href="javascript:CreaPDF();">Expotar a PDF</a><br>
+
+
+<table>
+    <tr>
+        <td>
+                {% for nota in notas %}
+                    {% if nota.indicador.tipo.id == 3 %}
+                        <h2>{{ nota.indicador.name }}: {{ nota.nota }}</h2>
+                    {% endif %}
+                {% endfor %}
+
+        </td>
+        <tr> <td VALIGN=TOP>
+                <div id="chartContainer1"></div>
+            </td>
+        </tr>
+         <tr>
+             <td VALIGN=TOP>
+                 <table>
+                     <tr>
+                         <td>
+                            <div id="chartContainer"></div>
+                        </td>
+                         <td>
+                             <div id="chartContainer2"></div>
+                         </td>
+                  </table>
+             </td>
+        </tr>
+	</tr>
+</table>
+<h3>Filtros Aplicados</h3>
+{% for filtro in listadoFiltros %}
+         <pre> {{ filtro }} </pre>
+{% endfor %}
+<table>
+    <tr>
+        <td VALIGN=TOP>
+            <h3>Indicadores</h3>
+                {% for nota in notas %}
+                    {% if nota.indicador.tipo.id == 1 %}
+                        <pre> {{ nota.indicador.name }}: {{ nota.nota }}</pre>
+                    {% endif %}
+                {% endfor %}
+        </td>
+        <td VALIGN=TOP>
+            <table>
+                <tr><td VALIGN=TOP>
+                    <h3>Dimensiones</h3>
+                        {% for nota in notas %}
+                            {% if nota.indicador.tipo.id == 2 %}
+                                <pre> {{ nota.indicador.name }}: {{ nota.nota }}</pre>
+                            {% endif %}
+                        {% endfor %}
+                </td></tr>
+                <tr><td VALIGN=TOP>
+                    <h3>Temas</h3>
+                        {% for nota in notas %}
+                            {% if nota.indicador.tipo.id == 4 %}
+                                <pre> {{ nota.indicador.name }}: {{ nota.nota }}</pre>
+                            {% endif %}
+                        {% endfor %}
+                </td></tr>
+                <tr><td VALIGN=TOP>
+                        <h3>Distribución por estadíos</h3>
+                        {% for nota in notas %}
+                            {% if nota.indicador.tipo.id == 5 %}
+                                <pre> {{ nota.indicador.name }}: {{ nota.nota }}</pre>
+                            {% endif %}
+                        {% endfor %}
+                </td></tr>
+            </table>
+        </td>
+	</tr>
+</table>
+
+
+{% endblock %}

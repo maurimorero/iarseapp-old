@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block body %}
+<div id="boxResultados2">
+<h1> Encuesta {{ encuesta.name }} </h1>
+<h3> Empresa: {{ profile.empresa }}</h3>
+<h3> Fecha: {{ rspMgr.created }}</h3>
+</div>
+<div id="boxResultados1">
+
+    <div class="datagrid">
+    <table>
+
+               <thead>
+                    <tr>
+                        <th>Pregunta: Respuesta</th>
+                    </tr>
+                </thead>
+        <tbody>
+        {% for ind in indicadores %}
+                <tr><td>
+            <h3>Indicador {{ ind.name}} (Dimension {{ ind.survey.dimension.name }}- Tema {{ ind.survey.name }})</h3>
+                    </td></tr>
+            {% for r in todasRespuestas %}
+                {% if r.question.category == ind %}
+                   <tr><td> {{ r.question.text }}: {{ r.body }} </td></tr>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+    </div>
+</div>
+
+{% endblock %}

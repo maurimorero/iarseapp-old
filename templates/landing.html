@@ -1,0 +1,6 @@
+{% extends 'base/base.html' %} {% block content %} <div id="boxLanding">
+    {% load static %}
+    <img src="{% static 'img/landing1.png' %}">
+        <a href="{% url 'land' %}" style="text-decoration:none;"> <input type="button" value="INGRESAR" class="botonLanding"></a>
+        <div id="txtLand"><h2>Juntos por un #AgroComprometido</h2></div> </div>
+{% endblock %}
