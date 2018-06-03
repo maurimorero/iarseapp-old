@@ -122,7 +122,7 @@ def Index(request):
 	return render(request, 'index.html')
 
 def SurveyDetail(request, idr, ids):
-	#import ipdb;ipdb.set_trace()
+	##import ipdb;ipdb.set_trace()
 	survey = Survey.objects.get(id=ids)
 	responseMgr = ResponseMgr.objects.get(id=idr)
 	category_items = Category.objects.filter(survey=survey)
