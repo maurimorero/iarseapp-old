@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render
 
 # Create your views here.
@@ -14,6 +16,8 @@ from django.contrib import messages
 from ..indicadores.models import Evaluacion
 from ..usuarios.models import Profile
 from django.core.mail import EmailMessage, EmailMultiAlternatives
+from openpyxl import Workbook
+from django.http.response import HttpResponse
 
 #class RegistroUsuario(CreateView):
 #    model= User
@@ -71,6 +75,46 @@ def UserHome(request):
     evaluaciones = Evaluacion.objects.filter(usuario=request.user).order_by('-fecha')
     indicadoresTodos = Evaluacion.objects.order_by('-fecha')
     perfiles = Profile.objects.all()
+
+    if request.method == 'POST':
+        # Creamos el libro de trabajo
+        wb = Workbook()
+
+        # Definimos como nuestra hoja de trabajo, la hoja activa, por defecto la primera del libro
+        ws = wb.active
+
+        # En la celda B1 ponemos el texto 'REPORTE DE PERSONAS'
+        ws['B1'] = 'Reporte de INDICAGRO'
+
+        # Juntamos las celdas desde la B1 hasta la E1, formando una sola celda
+        ws.merge_cells('B1:E1')
+
+        # Creamos los encabezados desde la celda B3 hasta la E3
+        ws['B3'] = 'Empresa'
+        ws['C3'] = 'CUIT'
+        ws['D3'] = 'N° BPA'
+        cont = 4
+
+        informes = Evaluacion.objects.all().order_by('-fecha')
+
+        # Recorremos el conjunto de personas y vamos escribiendo cada uno de los datos en las celdas
+        for informe in informes:
+            empresa=Profile.objects.filter(user=informe.usuario)
+            ws.cell(row=cont, column=2).value = empresa[0].empresaCom
+            ws.cell(row=cont, column=3).value = empresa[0].user.username
+            ws.cell(row=cont, column=4).value = informe.id
+            cont = cont + 1
+
+        # Establecemos el nombre del archivo
+        nombre_archivo = "ReporteIndicagro.xlsx"
+
+        # Definimos que el tipo de respuesta a devolver es un archivo de microsoft excel
+        response = HttpResponse(content_type="application/ms-excel")
+        contenido = "attachment; filename={0}".format(nombre_archivo)
+        response["Content-Disposition"] = contenido
+        wb.save(response)
+        return response
+
     contexto = {
         'pendientes': pendientes,
         'evaluaciones':evaluaciones,
