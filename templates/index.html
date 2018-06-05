@@ -70,11 +70,13 @@
 						<td>
 							<div style="font-size:18px;margin: 10px 20px 10px 20px;">¡ Bienvenido {{ request.user.profile.empresa }} !</div>
 						</td>
-						<td>
-							<form action="/usuarios/" method="post" id="response">{% csrf_token %}
-								<div class="submit-button" style="margin: 20px 0 10px 300px;"><input type="submit" value="Exportar a Excel" class="boton4"></div>
-							</form>
-						</td>
+						{% if request.user.groups.all.0.name == "Ministerio" %}
+								<td>
+									<form action="/usuarios/" method="post" id="response">{% csrf_token %}
+										<div class="submit-button" style="margin: 20px 0 10px 300px;"><input type="submit" value="Exportar Informe" class="boton4"></div>
+									</form>
+								</td>
+						{% endif %}
 					</tr>
 				</table>
 
