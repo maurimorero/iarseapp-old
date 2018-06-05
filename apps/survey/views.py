@@ -388,7 +388,7 @@ def EncuestaTerminar(request, id):
      # return redirect('usuarios:usuarios_home')
      return GeneraIndicadores(request, responseMgr)
   else:
-     return EncuestaIndexView(request, responseMgr.id, 1)
+     return EncuestaIndexView(request, responseMgr.id, 1,1)
 
 def GeneraIndicadores(request, responseMgr ):
 	if	(responseMgr.encuesta.id==1):
