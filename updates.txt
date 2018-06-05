@@ -1,0 +1,12 @@
+survey.html
+survey/views.py
+survey/url
+templates/index.html
+templates/base/base.html
+
+pip install openpyxl
+
+usuarios/views.py
+templates/index.html
+
+Crear grupo "Ministerio"
