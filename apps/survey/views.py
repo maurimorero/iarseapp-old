@@ -38,7 +38,7 @@ def GetNextSlide(subtema):
 			return 2
 		elif (subtema.name == 'Derechos humanos y respeto al individuo'):
 			return 3
-		elif (subtema.name == 'Buenas prácticas agropecuarias orientadas a la sustentabilidad'):
+		elif (subtema.name == 'Buenas prácticas agropecuarias  orientadas a la sustentabilidad'):
 			return 3
 		elif (subtema.name == 'Buenas prácticas ganaderas orientadas a la sustentabilidad'):
 			return 3
@@ -80,7 +80,7 @@ def GetNextSlide(subtema):
 			return 2
 		elif (subtema.name == 'Derechos humanos y respeto al individuo'):
 			return 3
-		elif (subtema.name == 'Buenas prácticas agropecuarias orientadas a la sustentabilidad'):
+		elif (subtema.name == 'Buenas prácticas agropecuarias  orientadas a la sustentabilidad'):
 			return 3
 		elif (subtema.name == 'Buenas prácticas ganaderas orientadas a la sustentabilidad'):
 			return 3
@@ -107,7 +107,7 @@ def GetNextSlide(subtema):
 			return 2
 		elif (subtema.name == 'Derechos humanos y respeto al individuo'):
 			return 3
-		elif (subtema.name == 'Buenas prácticas agropecuarias orientadas a la sustentabilidad'):
+		elif (subtema.name == 'Buenas prácticas agropecuarias  orientadas a la sustentabilidad'):
 			return 3
 		elif (subtema.name == 'Buenas prácticas ganaderas orientadas a la sustentabilidad'):
 			return 3
