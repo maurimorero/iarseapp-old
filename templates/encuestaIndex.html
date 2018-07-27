@@ -10,8 +10,32 @@
             document.getElementById("response").submit();
             window.location="../../../../.."+url;
         }
+
+        function TerminarEncuesta()
+        {
+                var div= document.createElement("div");
+                div.className += "overlay";
+                document.body.appendChild(div);
+                window.location='{% url 'surveys:encuesta_terminar' responseMgr.id %}';
+        }
+
     </script>
-<table>
+
+
+<div id="mensajeLoad">
+    ESTO SE VA A MOSTRAR
+</div>
+
+<script type="text/javascript">
+    var x = document.getElementById("mensajeLoad");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+</script>
+
+    <table>
     <tr>
         <td valign="top">
             <table>
@@ -70,7 +94,7 @@
                         <div id="boxCote5">
                             <div style="font-size:15px;margin: 40px 20px 30px 20px;">
                             Encuesta  <br> {{ encuesta }}
-                            <input type="button" value="Finalizar" class="boton4" onclick="window.location='{% url 'surveys:encuesta_terminar' responseMgr.id %}';" style="margin: 20px 0 0 0;">
+                            <input type="button" value="Finalizar" class="boton4" onclick="javascript:TerminarEncuesta();" style="margin: 20px 0 0 0;">
                         </div>
                         </div>
                     </td>
@@ -131,7 +155,7 @@
                 <button type="submit" class="boton"></button>
             </form>
                 <br><br>
-                <input type="button" value="Terminar para obtener informe de autodiagnóstico" class="boton4" onclick="window.location='{% url 'surveys:encuesta_terminar' responseMgr.id %}';" style="margin: 0px 20px 20px 310px;">
+                <input type="button" value="Terminar para obtener informe de autodiagnóstico" class="boton4" onclick="javascript:TerminarEncuesta();" style="margin: 0px 20px 20px 310px;">
                 <br>
             {% if errorMsg == 1 %}
                 <script>
@@ -147,6 +171,7 @@
             </td>
     </tr>
 </table>
+
 {% load static %}
 
     <script type="text/javascript">
